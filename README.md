@@ -30,7 +30,15 @@ of two states, dead or alive. A cell can become alive if it has three neighbors,
 result is a pattern of cells which mimicks how simple life forms react
 to isolation and overpopulation.
 
-This program is an implementation of Coway's game that allows you
+In this particular version, I have worked on creating a new rule and
+twist to the game. I have created a "multiplayer" version where the
+user can define a second "species" on the board along with the first.
+This allows the user to experiment with competition in the game. You
+can create systems and see what species wins the most territory, takes
+over another, or you could see if you can create a mutualistic
+relationship where the two species help each other survive.
+
+This program is also an implementation of Coway's game that allows you
 to draw upon years of research by downloading interesting patterns
 from [bitstorm](http://www.bitstorm.org/gameoflife/lexicon/) and using
 these patterns in your game. Also, you can save any grid you like and
