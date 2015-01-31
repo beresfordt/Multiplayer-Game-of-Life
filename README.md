@@ -14,7 +14,6 @@ I. Description
 --------------
 
 Usage :
-
 1. **~$ javac /path/to/gameoflife.java**
 2. **~$ java gameoflife**
 
