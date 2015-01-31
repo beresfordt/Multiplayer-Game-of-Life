@@ -93,7 +93,7 @@ public class gameoflife extends JFrame implements Runnable {
 	    clearItem.setAccelerator(KeyStroke.getKeyStroke("Q"));
 	    
 	    //deine actions of each menu item
-		//stepItem increases a single step
+	    //stepItem increases a single step
 	    stepItem.addActionListener(e -> nextStep());
 	    //userItem changes the user and resets the button text to reflect the current user
 	    userItem.addActionListener(e ->  { user = changeUser(); userItem.setText("User: " + user); });
@@ -109,7 +109,7 @@ public class gameoflife extends JFrame implements Runnable {
 	    clearItem.addActionListener(e -> { grid = new int[xSize][ySize]; p.repaint();                       });
 	    //starts the game continuously
 	    startItem.addActionListener(e -> {
-	    		//reverse the running boolean
+	    	//reverse the running boolean
                 running = !running;
                 startItem.setText(running ? "Stop" : "Start");
                 //make board unedittable
@@ -198,7 +198,7 @@ public class gameoflife extends JFrame implements Runnable {
 	
 	//builds menu of file options
 	private JMenu buildFileMenu() {
-		//initializes items
+	    //initializes items
 	    JMenu fileMenu = new JMenu("File");
 	    JMenuItem openItem = new JMenuItem("Open");
 	    JMenuItem saveItem = new JMenuItem("Save");
@@ -220,11 +220,11 @@ public class gameoflife extends JFrame implements Runnable {
 	
 	//calculates the next step of the grid based on the current grid layout
 	private void nextStep() {
-		//creates new temp grid for new layout
+	    //creates new temp grid for new layout
 	    int[][] newGrid = new int[xSize][ySize];
 	    for (int x = 0; x < xSize; x++) {
 	        for (int y = 0; y < ySize; y++) {
-	        	//calculates number of neightboars and how many are of each user
+	            //calculates number of neightboars and how many are of each user
 	            ArrayList<Integer> neighbors = gatherNeighbors(x, y);
 	            int oneCount = Collections.frequency(neighbors, 1);
 	            int twoCount = Collections.frequency(neighbors, 2);
@@ -245,7 +245,7 @@ public class gameoflife extends JFrame implements Runnable {
 
 	//method to resize the current grid
 	private int[][] resizeGrid(int newXSize, int newYSize) {
-		//initializes temp grid of new size
+	    //initializes temp grid of new size
 	    int[][] newGrid = new int[newXSize][newYSize];
 	    //translates the old grid to the new
 	    for (int x = 0; x < xSize; x++)
@@ -260,11 +260,11 @@ public class gameoflife extends JFrame implements Runnable {
 
 	//method to return array of a cell's neighbors
 	private ArrayList<Integer> gatherNeighbors(int x, int y) {
-		//initializes arraylist of integers to house the neighbors
+	    //initializes arraylist of integers to house the neighbors
 	    ArrayList<Integer> count = new ArrayList<Integer>();
 
-		//defines the different cell positions around the curent cell
-		//the ternary operators are to make sure that the grid wraps around and doesn't hit an edge
+	    //defines the different cell positions around the curent cell
+	    //the ternary operators are to make sure that the grid wraps around and doesn't hit an edge
 	    int right     = grid[x == xSize - 1 ? 0 : x + 1][y];
 	    int left      = grid[x == 0 ? xSize - 1 : x - 1][y];
 	    int up        = grid[x][y == ySize - 1 ? 0 : y + 1];
@@ -275,7 +275,7 @@ public class gameoflife extends JFrame implements Runnable {
 	    int leftup    = grid[x == 0 ? xSize - 1 : x - 1][y == ySize - 1 ? 0 : y + 1];
 	    int leftdown  = grid[x == 0 ? xSize - 1 : x - 1][y == 0 ? ySize - 1 : y - 1];
 
-		//adds the neighbor value if it is alive
+	    //adds the neighbor value if it is alive
 	    if (right != 0)     count.add(right);
 	    if (left != 0)      count.add(left);
 	    if (up != 0)        count.add(up);
@@ -290,7 +290,7 @@ public class gameoflife extends JFrame implements Runnable {
 	
 	//crops grid to boundaries of current live cells and saves to file
 	private void cropGrid() {
-		//initializes variables used
+	    //initializes variables used
 	    int firstRow = -1;
 	    int lastRow = -1;
 	    int firstCol = -1;
@@ -324,7 +324,7 @@ public class gameoflife extends JFrame implements Runnable {
 	
 	//converts the grid to a readable and saveable file
 	private void writeToFile(int[][] cgrid, int xSize, int ySize) {
-		//builds file chooser to choose save location
+	    //builds file chooser to choose save location
 	    JFileChooser jfc = new JFileChooser();
 	    //applies the lexicon file type filter
         jfc.setFileFilter(new CellFileFilter());
@@ -332,7 +332,7 @@ public class gameoflife extends JFrame implements Runnable {
         int willSave = jfc.showSaveDialog(gameoflife.this);
         //continue if user chooses a save location
         if (willSave == JFileChooser.APPROVE_OPTION) {
-        	//sets the current file and adds file extension if not already added
+            //sets the current file and adds file extension if not already added
             File currentFile = jfc.getSelectedFile();
             if (!currentFile.getPath().toLowerCase().endsWith(".cells"))
                 currentFile = new File(currentFile.getPath() + ".cells");
@@ -418,7 +418,7 @@ public class gameoflife extends JFrame implements Runnable {
         setVisible(true);
     }
 
-	//initialize the program entirely and run the runnable method to start the game
+    //initialize the program entirely and run the runnable method to start the game
     public static void main(String[] args) { javax.swing.SwingUtilities.invokeLater(new gameoflife()); }
     
     //classes used throughout the program
@@ -428,7 +428,7 @@ public class gameoflife extends JFrame implements Runnable {
 
         private static final long serialVersionUID = -897367256144487579L;
 
-			//redefine the pant method so that the grid is painted on repaint calls
+	    //redefine the pant method so that the grid is painted on repaint calls
             public void paintComponent(Graphics g) {
 		    for (int x = 0; x < xSize; x++) {
 		        for (int y = 0; y < ySize; y++) {
@@ -458,7 +458,7 @@ public class gameoflife extends JFrame implements Runnable {
         private final int x, y;
 
         public SizeMenuItem(int _x, int _y) {
-        	//initializes name and variables
+            //initializes name and variables
             super(_x + "x"+_y);
             x = _x;
             y = _y;
@@ -485,9 +485,9 @@ public class gameoflife extends JFrame implements Runnable {
 	//defines the shape items in the saved shapes menu
 	class ShapeMenuItem extends JMenuItem {
 		
-		//initializes variables used
-        private static final long serialVersionUID = 770975188019509393L;
-        private final File shapeFile;
+	    //initializes variables used
+            private static final long serialVersionUID = 770975188019509393L;
+            private final File shapeFile;
 	    private int[][] sGrid;
 	    private int xSize;
 	    private int ySize;
