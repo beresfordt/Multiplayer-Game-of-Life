@@ -23,18 +23,18 @@ Usage :
 
 
 
-The Game of LIfe, also known simply as Life, is a two-dimensional
+The Game of Life, also known simply as Life, is a two-dimensional
 cellular automaton devised by the British mathematician John Horton
 Conway in 1970. The idea is that every cell in a square grid has one
 of two states, dead or alive. A cell can become alive if it has three neighbors, but dies if it has more than three or less than two. The
 result is a pattern of cells which mimicks how simple life forms react
 to isolation and overpopulation.
 
-This program is an impimentation of Coway's game that allows you
+This program is an implementation of Coway's game that allows you
 to draw upon years of research by downloading interesting patterns
 from [bitstorm](http://www.bitstorm.org/gameoflife/lexicon/) and using
 these patterns in your game. Also, you can save any grid you like and
-us it later on in the same manner.
+use it later on in the same manner.
 
 The world of Life has boundless shapes and patterns, each of which
 has its own unique evolution, behavior, and interaction with the shapes
