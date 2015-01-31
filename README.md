@@ -7,7 +7,10 @@ README
 Creator : Micah Halter
 
 Version 1.0  31 January 2015
+
 Requires: Java8
+
+![picture alt](https://lh3.googleusercontent.com/-2Yh8ItEcTQQ/VMxs3m3Na5I/AAAAAAAAeWk/R-cyDb0sitE/w720-h746-no/game%2Bof%2Blife.png "Image of the game running.")
 
 ======================================================================
 I. Description
