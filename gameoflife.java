@@ -496,12 +496,12 @@ public class gameoflife extends JFrame implements Runnable {
 
         // redefine the pant method so that the grid is painted on repaint calls
         public void paintComponent(Graphics g) {
+            // get the box width and height
+            float height = (float) p.getHeight() / ySize;
+            float width = (float) p.getWidth() / xSize;
+            Graphics2D g2 = (Graphics2D) g;
             for (int x = 0; x < xSize; x++) {
                 for (int y = 0; y < ySize; y++) {
-                    // get the box width and height
-                    float height = (float) p.getHeight() / ySize;
-                    float width = (float) p.getWidth() / xSize;
-                    Graphics2D g2 = (Graphics2D) g;
                     // set the color of the cell
                     g2.setColor(grid[x][y] == 1 ? user1
                             : grid[x][y] == 2 ? user2 : Color.WHITE);
