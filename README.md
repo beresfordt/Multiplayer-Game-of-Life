@@ -33,10 +33,16 @@ to isolation and overpopulation.
 In this particular version, I have worked on creating a new rule and
 twist to the game. I have created a "multiplayer" version where the
 user can define a second "species" on the board along with the first.
-This allows the user to experiment with competition in the game. You
-can create systems and see what species wins the most territory, takes
-over another, or you could see if you can create a mutualistic
-relationship where the two species help each other survive.
+The new rule is part of the reproduction rule where if a dead cell is
+touching three living neighbors, it becomes alive due to reproduction.
+Instead of the dead cell just coming to life, it takes the form of
+whatever species acounts for the most individuals out of the three
+living cells. In these situations, the two species have competed, and
+one has taken over the territory over the other. This allows the user
+to experiment with competition in the game. You can create systems
+and see what species wins the most territory, takes over another, or
+you could see if you can create a mutualistic relationship where the
+two species help each other survive.
 
 This program is also an implementation of Coway's game that allows you
 to draw upon years of research by downloading interesting patterns
