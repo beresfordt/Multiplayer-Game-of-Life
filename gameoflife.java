@@ -12,8 +12,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -442,21 +440,15 @@ public class gameoflife extends JFrame implements Runnable {
             public void mouseClicked(MouseEvent e) {
                 // gets current location on the panel and divides it by the size
                 // of the panel and size of the grid to get the box number
-                // uses BigDecimal class because I couldn't find another way to
-                // make sure that the number calculated was rounded down
-                // the number needs to be rounded down so that the correct box
-                // is chosen and filled in
-                currentY = new BigDecimal((float) e.getX()
-                        / ((float) p.getWidth() / xSize)).setScale(0,
-                        RoundingMode.DOWN).intValue();
-                currentX = new BigDecimal((float) e.getY()
-                        / ((float) p.getHeight() / ySize)).setScale(0,
-                        RoundingMode.DOWN).intValue();
+                // uses a double in the denominator to force an integer divide
+                // to force the final value to round down
+                currentY = (int) (e.getX() / ((double) p.getWidth() / xSize));
+                currentX = (int) (e.getY() / ((double) p.getHeight() / ySize));
                 // if the click is a right click, don't toggle cell state, but
                 // open shape menu
                 if (SwingUtilities.isRightMouseButton(e))
                     shapeMenu.show(e.getComponent(), e.getX(), e.getY());
-                // if it isn't a right click, and the grid is edittable, toggle
+                // if it isn't a right click, and the grid is editable, toggle
                 // the cell state and repaint
                 else if (edit) {
                     grid[currentY][currentX] = (grid[currentY][currentX] == user ? 0
