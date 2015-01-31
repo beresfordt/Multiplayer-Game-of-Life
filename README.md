@@ -14,8 +14,8 @@ I. Description
 --------------
 
 Usage :
-    **~$ javac /path/to/gameoflife.java**
-    **~$ java gameoflife**
+  **~$ javac /path/to/gameoflife.java**
+  **~$ java gameoflife**
 
 The Game of LIfe, also known simply as Life, is a two-dimensional
 cellular automaton devised by the British mathematician John Horton
