@@ -336,7 +336,7 @@ public class gameoflife extends JFrame implements Runnable {
             File currentFile = jfc.getSelectedFile();
             if (!currentFile.getPath().toLowerCase().endsWith(".cells"))
                 currentFile = new File(currentFile.getPath() + ".cells");
-            creates a buffered writer to save file
+            //creates a buffered writer to save file
             BufferedWriter writer = null;
             try {
                 writer = new BufferedWriter(new FileWriter(currentFile));
@@ -533,7 +533,7 @@ public class gameoflife extends JFrame implements Runnable {
 	        addActionListener(e -> {
 	            try {
 	                for (int x = 0; x < xSize; x++)
-	                    for (int y = 0; y < ySize; y++;
+	                    for (int y = 0; y < ySize; y++)
 	                        grid[y + currentY][x + currentX] = sGrid[y][x];
 	                p.repaint();
 	            //catch array out of bounds error and prompt user that the shape is too big for the grid
