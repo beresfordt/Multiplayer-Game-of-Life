@@ -14,8 +14,10 @@ I. Description
 --------------
 
 Usage :
+
 1. **~$ javac /path/to/gameoflife.java**
 2. **~$ java gameoflife**
+
 
 
 The Game of LIfe, also known simply as Life, is a two-dimensional
