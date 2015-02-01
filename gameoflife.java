@@ -424,9 +424,11 @@ public class gameoflife extends JFrame implements Runnable {
     private void openFile() {
         JFileChooser jfc = new JFileChooser();
         jfc.setFileFilter(new CellFileFilter());
+        jfc.setMultiSelectionEnabled(true);
         int willOpen = jfc.showOpenDialog(gameoflife.this);
         if (willOpen == JFileChooser.APPROVE_OPTION)
-            shapeMenu.add(new ShapeMenuItem(jfc.getSelectedFile()));
+            for (File f : jfc.getSelectedFiles())
+                shapeMenu.add(new ShapeMenuItem(f));
     }
 
     // run method to start the game
@@ -608,14 +610,16 @@ public class gameoflife extends JFrame implements Runnable {
                 // user
             } catch (IOException e) {
                 sGrid = new int[0][0];
-                JOptionPane.showMessageDialog(this, "File Error");
+                JOptionPane.showMessageDialog(this, shapeFile.getName()
+                        + ": File Error");
             }
             // try closing file, and prompt user in case of error
             finally {
                 try {
                     reader.close();
                 } catch (IOException e) {
-                    JOptionPane.showMessageDialog(this, "Error closing file.");
+                    JOptionPane.showMessageDialog(this, "Error closing file: "
+                            + shapeFile.getName());
                 }
             }
             // adds the action listener to put the file into the current grid
