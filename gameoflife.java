@@ -101,10 +101,14 @@ public class gameoflife extends JFrame implements Runnable {
         });
         // asks user to pick a color to change the current user to
         colorItem.addActionListener(e -> {
-            if (user == 1)
-                user1 = JColorChooser.showDialog(p, "Choose a Color", user1);
-            else
-                user2 = JColorChooser.showDialog(p, "Choose a Color", user2);
+            Color tempColor = JColorChooser.showDialog(p, "Choose a Color",
+                    user == 1 ? user1 : user2);
+            if (tempColor != null) {
+                if (user == 1)
+                    user1 = tempColor;
+                else
+                    user2 = tempColor;
+            }
             p.repaint();
         });
         // creates a new grid
