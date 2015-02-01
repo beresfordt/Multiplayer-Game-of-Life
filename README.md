@@ -71,6 +71,13 @@ III. Instructions
 - You can toggle the state of a cell by clicking on a cell
   (oscillates between dead and alive).
 
+- By clicking and dragging the mouse using the left click, you can
+  turn on all cells your mouse touches (this does not change other
+  user cell states)
+
+- By clicking and dragging the mouse using the right click, the mouse
+  becomes like an eraser and turns every cell it touches to being dead
+
 - You can change the current species you are editing by clicking the
   user button in the menu bar.
 
@@ -94,6 +101,7 @@ III. Instructions
 
     - Once a file has been opened, you can right click on the board
       to open up a menu to select any of the shapes you have opened.
+      (These shapes are inserted as the current user)
 
     - The save item allows you to save the current board as a cropped
       down shape for later use, or for sharing.
