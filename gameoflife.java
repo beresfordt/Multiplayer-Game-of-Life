@@ -1,37 +1,17 @@
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.Rectangle2D;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
-
-import javax.swing.JColorChooser;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
-import javax.swing.Timer;
-import javax.swing.filechooser.FileFilter;
 
 public class gameoflife extends JFrame implements Runnable {
 
@@ -65,6 +45,12 @@ public class gameoflife extends JFrame implements Runnable {
 
         // build new blank grid
         grid = new int[xSize][ySize];
+    }
+
+    // initialize the program entirely and run the runnable method
+    // to start the game
+    public static void main(String[] args) {
+        javax.swing.SwingUtilities.invokeLater(new gameoflife());
     }
 
     // build the top menu bar
@@ -123,7 +109,7 @@ public class gameoflife extends JFrame implements Runnable {
                 running = !running;
                 startItem.setText(running ? "Stop" : "Start");
                 // make board uneditable
-                edit = running ? false : true;
+            edit = ! running;
 
                 // while running, user cannot be able to click other buttons
                 stepItem.setEnabled(!running);
@@ -180,6 +166,8 @@ public class gameoflife extends JFrame implements Runnable {
                 sizeMenu.add(new SizeMenuItem(w, h));
                 sizeMenu.add(customSize);
             } catch (java.lang.NumberFormatException n) {
+                JOptionPane
+                        .showMessageDialog(this, "Invalid Number");
             }
         });
         sizeMenu.add(customSize);
@@ -207,6 +195,8 @@ public class gameoflife extends JFrame implements Runnable {
                 speedMenu.add(new SpeedMenuItem(h));
                 speedMenu.add(customSpeed);
             } catch (java.lang.NumberFormatException n) {
+                JOptionPane
+                        .showMessageDialog(this, "Invalid Number");
             }
         });
         speedMenu.add(customSpeed);
@@ -286,7 +276,7 @@ public class gameoflife extends JFrame implements Runnable {
     // method to return array of a cell's neighbors
     private ArrayList<Integer> gatherNeighbors(int x, int y) {
         // initializes an array list of integers to house the neighbors
-        ArrayList<Integer> count = new ArrayList<Integer>();
+        ArrayList<Integer> count = new ArrayList<>();
 
         // defines the different cell positions around the current cell
         // the ternary operators are to make sure that the grid wraps around and
@@ -517,15 +507,9 @@ public class gameoflife extends JFrame implements Runnable {
         });
         // set the default close operation to fully close the program when the
         // user presses the 'x' in the corner
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         // sets the window contents to visible
         setVisible(true);
-    }
-
-    // initialize the program entirely and run the runnable method
-    // to start the game
-    public static void main(String[] args) {
-        javax.swing.SwingUtilities.invokeLater(new gameoflife());
     }
 
     /*
@@ -648,7 +632,7 @@ public class gameoflife extends JFrame implements Runnable {
                         + ": File Error");
             }
             // try closing file, and prompt user in case of error
-            finally {
+            if (reader != null) {
                 try {
                     reader.close();
                 } catch (IOException e) {
@@ -682,7 +666,7 @@ public class gameoflife extends JFrame implements Runnable {
 
         // defines the files allowed
         public boolean accept(File f) {
-            return f.isDirectory() ? true : f.getName().endsWith(".cells");
+            return f.isDirectory() || f.getName().endsWith(".cells");
         }
 
         // define the description to be shows in the file chooser
