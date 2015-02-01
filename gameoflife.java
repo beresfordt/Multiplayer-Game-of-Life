@@ -373,7 +373,7 @@ public class gameoflife extends JFrame implements Runnable {
         JFileChooser jfc = new JFileChooser();
         // applies the lexicon file type filter
         jfc.setFileFilter(new CellFileFilter());
-        // shows the dialog nd asks for save location
+        // shows the dialog and asks for save location
         int willSave = jfc.showSaveDialog(gameoflife.this);
         // continue if user chooses a save location
         if (willSave == JFileChooser.APPROVE_OPTION) {
@@ -425,8 +425,7 @@ public class gameoflife extends JFrame implements Runnable {
         JFileChooser jfc = new JFileChooser();
         jfc.setFileFilter(new CellFileFilter());
         jfc.setMultiSelectionEnabled(true);
-        int willOpen = jfc.showOpenDialog(gameoflife.this);
-        if (willOpen == JFileChooser.APPROVE_OPTION)
+        if (jfc.showOpenDialog(gameoflife.this) == JFileChooser.APPROVE_OPTION)
             for (File f : jfc.getSelectedFiles())
                 shapeMenu.add(new ShapeMenuItem(f));
     }
@@ -628,7 +627,9 @@ public class gameoflife extends JFrame implements Runnable {
                 try {
                     for (int x = 0; x < xSize; x++)
                         for (int y = 0; y < ySize; y++)
-                            grid[y + currentY][x + currentX] = sGrid[y][x];
+                            grid[y + currentY][x + currentX] = sGrid[y][x] == 1 ? user
+                                    : sGrid[y][x] == 2 ? (user == 1 ? user + 1
+                                            : user - 1) : 0;
                     p.repaint();
                     // catch array out of bounds error and prompt user that the
                     // shape is too big for the grid
