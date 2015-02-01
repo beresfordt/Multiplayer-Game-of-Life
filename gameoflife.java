@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.Rectangle2D;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -479,6 +480,23 @@ public class gameoflife extends JFrame implements Runnable {
             @Override
             public void mouseExited(MouseEvent e) {
             }
+        });
+        p.addMouseMotionListener(new MouseMotionListener() {
+
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                currentY = (int) (e.getX() / ((double) p.getWidth() / xSize));
+                currentX = (int) (e.getY() / ((double) p.getHeight() / ySize));
+                if (SwingUtilities.isLeftMouseButton(e)) {
+                    grid[currentY][currentX] = user;
+                    p.repaint();
+                }
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+            }
+
         });
         // set the default close operation to fully close the program when the
         // user presses the 'x' in the corner
