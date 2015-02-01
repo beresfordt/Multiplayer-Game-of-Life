@@ -487,10 +487,10 @@ public class gameoflife extends JFrame implements Runnable {
             public void mouseDragged(MouseEvent e) {
                 currentY = (int) (e.getX() / ((double) p.getWidth() / xSize));
                 currentX = (int) (e.getY() / ((double) p.getHeight() / ySize));
-                if (SwingUtilities.isLeftMouseButton(e)
-                        && (currentY < xSize && currentY >= 0)
+                if (edit && (currentY < xSize && currentY >= 0)
                         && (currentX < ySize && currentX >= 0)) {
-                    grid[currentY][currentX] = user;
+                    grid[currentY][currentX] = SwingUtilities
+                            .isLeftMouseButton(e) ? user : 0;
                     p.repaint();
                 }
             }
