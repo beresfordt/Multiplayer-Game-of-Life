@@ -485,12 +485,27 @@ public class gameoflife extends JFrame implements Runnable {
 
             @Override
             public void mouseDragged(MouseEvent e) {
+                // Allow user to click and drag mouse to toggle cell states
                 currentY = (int) (e.getX() / ((double) p.getWidth() / xSize));
                 currentX = (int) (e.getY() / ((double) p.getHeight() / ySize));
+
+                // checks if the board is editable, and if the mouse is on the
+                // screen
                 if (edit && (currentY < xSize && currentY >= 0)
                         && (currentX < ySize && currentX >= 0)) {
+                    // if the button used is the left click, then it turns cells
+                    // on
+                    // Checks to make sure that the cell it is changing is 0 so
+                    // it
+                    // doesn't overwrite the other user's information
+                    // accidentally
                     grid[currentY][currentX] = SwingUtilities
-                            .isLeftMouseButton(e) ? user : 0;
+                            .isLeftMouseButton(e) ? grid[currentY][currentX] == 0 ? user
+                            : grid[currentY][currentX]
+                            // if the button isn't the left click, then it
+                            // becomes an eraser
+                            // and deletes everything
+                            : 0;
                     p.repaint();
                 }
             }
