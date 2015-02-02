@@ -19,8 +19,7 @@ public class GameOfLife extends JFrame implements Runnable {
     private static final long serialVersionUID = - 6912109370693886742L;
     private Timer gameTimer;
     private GridPanel p;
-    private boolean running;
-    private boolean contiguous;
+    private boolean running, contiguous;
     private int[][] grid;
     private int xSize, ySize, currentX, currentY, user;
     private Color user1, user2;
@@ -208,7 +207,7 @@ public class GameOfLife extends JFrame implements Runnable {
         // sets actions for item contiguous
         contiguousItem.addActionListener(e -> {
             contiguous = ! contiguous;
-            contiguousItem.setText((contiguous ? "" : "!") + "Contiguous");
+            contiguousItem.setText("Contiguous " + (contiguous ? "On" : "Off"));
         });
         // adds the items and returns menu
         optionMenu.add(contiguousItem);
