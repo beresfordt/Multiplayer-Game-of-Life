@@ -16,10 +16,11 @@ import java.util.Collections;
 public class GameOfLife extends JFrame implements Runnable {
 
     // define needed state variable
-    private static final long serialVersionUID = -6912109370693886742L;
+    private static final long serialVersionUID = - 6912109370693886742L;
     private Timer gameTimer;
     private GridPanel p;
     private boolean running;
+    private boolean contiguous;
     private int[][] grid;
     private int xSize, ySize, currentX, currentY, user;
     private Color user1, user2;
@@ -35,6 +36,7 @@ public class GameOfLife extends JFrame implements Runnable {
         xSize = 20;
         ySize = 20;
         user = 1;
+        contiguous = true;
 
         // build new blank grid
         grid = new int[xSize][ySize];
@@ -54,6 +56,7 @@ public class GameOfLife extends JFrame implements Runnable {
         // build the menus in the menu bar
         JMenu sizeMenu = buildSizeMenu();
         JMenu speedMenu = buildSpeedMenu();
+        JMenu optionMenu = buildOptionMenu();
         JMenu fileMenu = buildFileMenu();
 
         // initialize items in the menu bar
@@ -99,16 +102,16 @@ public class GameOfLife extends JFrame implements Runnable {
         // starts the game continuously
         startItem.addActionListener(e -> {
             // reverse the running boolean
-            running = !running;
+            running = ! running;
             startItem.setText(running ? "Stop" : "Start");
 
             // while running, user cannot be able to click other buttons
-            stepItem.setEnabled(!running);
-            clearItem.setEnabled(!running);
-            userItem.setEnabled(!running);
-            colorItem.setEnabled(!running);
-            sizeMenu.setEnabled(!running);
-            speedMenu.setEnabled(!running);
+            stepItem.setEnabled(! running);
+            clearItem.setEnabled(! running);
+            userItem.setEnabled(! running);
+            colorItem.setEnabled(! running);
+            sizeMenu.setEnabled(! running);
+            speedMenu.setEnabled(! running);
 
             // start animation
             if (running)
@@ -119,6 +122,7 @@ public class GameOfLife extends JFrame implements Runnable {
 
         // add menu items and menus
         mbar.add(fileMenu);
+        mbar.add(optionMenu);
         mbar.add(startItem);
         mbar.add(stepItem);
         mbar.add(userItem);
@@ -192,6 +196,23 @@ public class GameOfLife extends JFrame implements Runnable {
         });
         speedMenu.add(customSpeed);
         return speedMenu;
+    }
+
+    // builds menu of option options
+    private JMenu buildOptionMenu() {
+        // initializes items
+        JMenu optionMenu = new JMenu("Options");
+        JMenuItem contiguousItem = new JMenuItem("Contiguous");
+        // sets keyboard shortcuts for option options
+        contiguousItem.setAccelerator(KeyStroke.getKeyStroke("control C"));
+        // sets actions for item contiguous
+        contiguousItem.addActionListener(e -> {
+            contiguous = ! contiguous;
+            contiguousItem.setText((contiguous ? "" : "!") + "Contiguous");
+        });
+        // adds the items and returns menu
+        optionMenu.add(contiguousItem);
+        return optionMenu;
     }
 
     // builds menu of file options
@@ -268,23 +289,45 @@ public class GameOfLife extends JFrame implements Runnable {
     private ArrayList<Integer> gatherNeighbors(int x, int y) {
         // initializes an array list of integers to house the neighbors
         ArrayList<Integer> count = new ArrayList<>();
+        int right, left, up, down, rightup, rightdown, leftup, leftdown;
 
+        // if contiguous option is true
         // defines the different cell positions around the current cell
         // the ternary operators are to make sure that the grid wraps around and
         // doesn't hit an edge
-        int right = grid[x == xSize - 1 ? 0 : x + 1][y];
-        int left = grid[x == 0 ? xSize - 1 : x - 1][y];
-        int up = grid[x][y == ySize - 1 ? 0 : y + 1];
-        int down = grid[x][y == 0 ? ySize - 1 : y - 1];
+        if (contiguous) {
+            right = grid[x == xSize - 1 ? 0 : x + 1][y];
+            left = grid[x == 0 ? xSize - 1 : x - 1][y];
+            up = grid[x][y == ySize - 1 ? 0 : y + 1];
+            down = grid[x][y == 0 ? ySize - 1 : y - 1];
 
-        int rightup = grid[x == xSize - 1 ? 0 : x + 1][y == ySize - 1 ? 0
-                : y + 1];
-        int rightdown = grid[x == xSize - 1 ? 0 : x + 1][y == 0 ? ySize - 1
-                : y - 1];
-        int leftup = grid[x == 0 ? xSize - 1 : x - 1][y == ySize - 1 ? 0
-                : y + 1];
-        int leftdown = grid[x == 0 ? xSize - 1 : x - 1][y == 0 ? ySize - 1
-                : y - 1];
+            rightup = grid[x == xSize - 1 ? 0 : x + 1][y == ySize - 1 ? 0
+                    : y + 1];
+            rightdown = grid[x == xSize - 1 ? 0 : x + 1][y == 0 ? ySize - 1
+                    : y - 1];
+            leftup = grid[x == 0 ? xSize - 1 : x - 1][y == ySize - 1 ? 0
+                    : y + 1];
+            leftdown = grid[x == 0 ? xSize - 1 : x - 1][y == 0 ? ySize - 1
+                    : y - 1];
+
+            // if contiguous option is false
+            // defines the different cell positions around the current cell
+        } else {
+            boolean xhigh = x < xSize - 1;
+            boolean xlow = x > 0;
+            boolean yhigh = y < ySize - 1;
+            boolean ylow = y > 0;
+
+            right = xhigh ? grid[x + 1][y] : 0;
+            left = xlow ? grid[x - 1][y] : 0;
+            up = yhigh ? grid[x][y + 1] : 0;
+            down = ylow ? grid[x][y - 1] : 0;
+
+            rightup = xhigh && yhigh ? grid[x + 1][y + 1] : 0;
+            rightdown = xhigh && ylow ? grid[x + 1][y - 1] : 0;
+            leftup = xlow && yhigh ? grid[x - 1][y + 1] : 0;
+            leftdown = xlow && ylow ? grid[x - 1][y - 1] : 0;
+        }
 
         // adds the neighbor value if it is alive
         if (right != 0)
@@ -310,22 +353,22 @@ public class GameOfLife extends JFrame implements Runnable {
     // crops grid to boundaries of current live cells and saves to file
     private void cropGrid() {
         // initializes variables used
-        int firstRow = -1;
-        int lastRow = -1;
-        int firstCol = -1;
-        int lastCol = -1;
+        int firstRow = - 1;
+        int lastRow = - 1;
+        int firstCol = - 1;
+        int lastCol = - 1;
 
         // loops through and marks the x and y boundaries of the live cells
         for (int y = 0; y < ySize; y++) {
             for (int x = 0; x < xSize; x++) {
                 if (grid[x][y] != 0) {
-                    if (firstRow == -1)
+                    if (firstRow == - 1)
                         firstRow = y;
                     else if (y < firstRow)
                         firstRow = y;
                     if (y > lastRow)
                         lastRow = y;
-                    if (firstCol == -1)
+                    if (firstCol == - 1)
                         firstCol = x;
                     else if (x < firstCol)
                         firstCol = x;
@@ -336,7 +379,7 @@ public class GameOfLife extends JFrame implements Runnable {
         }
 
         // checks to make sure the grid wasn't blank
-        if (firstRow != -1) {
+        if (firstRow != - 1) {
             // creates temporary grid of the specified boundary and fills with
             // the
             // cells
@@ -362,7 +405,7 @@ public class GameOfLife extends JFrame implements Runnable {
             // sets the current file and adds file extension if not already
             // added
             File currentFile = jfc.getSelectedFile();
-            if (!currentFile.getPath().toLowerCase().endsWith(".cells"))
+            if (! currentFile.getPath().toLowerCase().endsWith(".cells"))
                 currentFile = new File(currentFile.getPath() + ".cells");
             // creates a buffered writer to save file
             BufferedWriter writer = null;
@@ -438,7 +481,7 @@ public class GameOfLife extends JFrame implements Runnable {
                     shapeMenu.show(e.getComponent(), e.getX(), e.getY());
                     // if it isn't a right click, and the grid is editable, toggle
                     // the cell state and repaint
-                else if (!running) {
+                else if (! running) {
                     grid[currentY][currentX] = (grid[currentY][currentX] == user ? 0
                             : user);
                     p.repaint();
@@ -472,7 +515,7 @@ public class GameOfLife extends JFrame implements Runnable {
 
                 // checks if the board is editable, and if the mouse is on the
                 // screen
-                if (!running && (currentY < xSize && currentY >= 0)
+                if (! running && (currentY < xSize && currentY >= 0)
                         && (currentX < ySize && currentX >= 0)) {
                     // if the button used is the left click, then it turns cells
                     // on
@@ -510,7 +553,7 @@ public class GameOfLife extends JFrame implements Runnable {
     // defines the panel the grid is drawn
     class GridPanel extends JPanel {
 
-        private static final long serialVersionUID = -897367256144487579L;
+        private static final long serialVersionUID = - 897367256144487579L;
 
         // redefine the pant method so that the grid is painted on repaint calls
         public void paintComponent(Graphics g) {
@@ -560,7 +603,7 @@ public class GameOfLife extends JFrame implements Runnable {
     // speed menu item class for easy addition of new speed menu items
     class SpeedMenuItem extends JMenuItem {
 
-        private static final long serialVersionUID = -2630048822872351199L;
+        private static final long serialVersionUID = - 2630048822872351199L;
 
         public SpeedMenuItem(int _speed) {
             // initializes name
