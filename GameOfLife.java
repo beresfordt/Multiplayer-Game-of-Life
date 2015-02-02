@@ -294,58 +294,57 @@ public class GameOfLife extends JFrame implements Runnable {
         // defines the different cell positions around the current cell
         // the ternary operators are to make sure that the grid wraps around and
         // doesn't hit an edge
+        boolean xBig = contiguous ? (x == (xSize - 1)) : (x < (xSize - 1));
+        boolean xSmall = contiguous ? x == 0 : x > 0;
+        boolean yBig = contiguous ? y == ySize - 1 : y < ySize - 1;
+        boolean ySmall = contiguous ? y == 0 : y > 0;
+
         if (contiguous) {
-            right = grid[x == xSize - 1 ? 0 : x + 1][y];
-            left = grid[x == 0 ? xSize - 1 : x - 1][y];
-            up = grid[x][y == ySize - 1 ? 0 : y + 1];
-            down = grid[x][y == 0 ? ySize - 1 : y - 1];
+            right = grid[xBig ? 0 : x + 1][y];
+            left = grid[xSmall ? xSize - 1 : x - 1][y];
+            up = grid[x][yBig ? 0 : y + 1];
+            down = grid[x][ySmall ? ySize - 1 : y - 1];
 
-            rightup = grid[x == xSize - 1 ? 0 : x + 1][y == ySize - 1 ? 0
+            rightup = grid[xBig ? 0 : x + 1][yBig ? 0
                     : y + 1];
-            rightdown = grid[x == xSize - 1 ? 0 : x + 1][y == 0 ? ySize - 1
+            rightdown = grid[xBig ? 0 : x + 1][ySmall ? ySize - 1
                     : y - 1];
-            leftup = grid[x == 0 ? xSize - 1 : x - 1][y == ySize - 1 ? 0
+            leftup = grid[xSmall ? xSize - 1 : x - 1][yBig ? 0
                     : y + 1];
-            leftdown = grid[x == 0 ? xSize - 1 : x - 1][y == 0 ? ySize - 1
+            leftdown = grid[xSmall ? xSize - 1 : x - 1][ySmall ? ySize - 1
                     : y - 1];
 
+        } else {
             // if contiguous option is false
             // defines the different cell positions around the current cell
-        } else {
-            boolean xhigh = x < xSize - 1;
-            boolean xlow = x > 0;
-            boolean yhigh = y < ySize - 1;
-            boolean ylow = y > 0;
+            right = xBig ? grid[x + 1][y] : 0;
+            left = xSmall ? grid[x - 1][y] : 0;
+            up = yBig ? grid[x][y + 1] : 0;
+            down = ySmall ? grid[x][y - 1] : 0;
 
-            right = xhigh ? grid[x + 1][y] : 0;
-            left = xlow ? grid[x - 1][y] : 0;
-            up = yhigh ? grid[x][y + 1] : 0;
-            down = ylow ? grid[x][y - 1] : 0;
-
-            rightup = xhigh && yhigh ? grid[x + 1][y + 1] : 0;
-            rightdown = xhigh && ylow ? grid[x + 1][y - 1] : 0;
-            leftup = xlow && yhigh ? grid[x - 1][y + 1] : 0;
-            leftdown = xlow && ylow ? grid[x - 1][y - 1] : 0;
+            rightup = xBig && yBig ? grid[x + 1][y + 1] : 0;
+            rightdown = xBig && ySmall ? grid[x + 1][y - 1] : 0;
+            leftup = xSmall && yBig ? grid[x - 1][y + 1] : 0;
+            leftdown = xSmall && ySmall ? grid[x - 1][y - 1] : 0;
         }
 
         // adds the neighbor value if it is alive
-        if (right != 0)
-            count.add(right);
-        if (left != 0)
-            count.add(left);
-        if (up != 0)
-            count.add(up);
-        if (down != 0)
-            count.add(down);
-        if (rightup != 0)
-            count.add(rightup);
-        if (rightdown != 0)
-            count.add(rightdown);
-        if (leftup != 0)
-            count.add(leftup);
-        if (leftdown != 0)
-            count.add(leftdown);
+        count = countAdd(right, count);
+        count = countAdd(left, count);
+        count = countAdd(up, count);
+        count = countAdd(down, count);
 
+        count = countAdd(rightup, count);
+        count = countAdd(rightdown, count);
+        count = countAdd(leftup, count);
+        count = countAdd(leftdown, count);
+
+        return count;
+    }
+
+    private ArrayList<Integer> countAdd(int _int, ArrayList<Integer> count) {
+        if (_int != 0)
+            count.add(_int);
         return count;
     }
 
@@ -358,24 +357,14 @@ public class GameOfLife extends JFrame implements Runnable {
         int lastCol = - 1;
 
         // loops through and marks the x and y boundaries of the live cells
-        for (int y = 0; y < ySize; y++) {
-            for (int x = 0; x < xSize; x++) {
+        for (int y = 0; y < ySize; y++)
+            for (int x = 0; x < xSize; x++)
                 if (grid[x][y] != 0) {
-                    if (firstRow == - 1)
-                        firstRow = y;
-                    else if (y < firstRow)
-                        firstRow = y;
-                    if (y > lastRow)
-                        lastRow = y;
-                    if (firstCol == - 1)
-                        firstCol = x;
-                    else if (x < firstCol)
-                        firstCol = x;
-                    if (x > lastCol)
-                        lastCol = x;
+                    firstRow = ((firstRow == - 1) || (y < firstRow)) ? y : firstRow;
+                    firstCol = ((firstCol == - 1) || (x < firstCol)) ? x : firstCol;
+                    lastRow = (y > lastRow) ? y : lastRow;
+                    lastCol = (x > lastCol) ? x : lastCol;
                 }
-            }
-        }
 
         // checks to make sure the grid wasn't blank
         if (firstRow != - 1) {
@@ -665,9 +654,10 @@ public class GameOfLife extends JFrame implements Runnable {
                         + ": File Error");
             }
             // try closing file, and prompt user in case of error
-            if (reader != null) {
+            finally {
                 try {
-                    reader.close();
+                    if (reader != null)
+                        reader.close();
                 } catch (IOException e) {
                     JOptionPane.showMessageDialog(this, "Error closing file: "
                             + shapeFile.getName());
