@@ -19,12 +19,7 @@ public class GameOfLife extends JFrame implements Runnable {
     private static final long serialVersionUID = - 6912109370693886742L;
     private Timer gameTimer;
     private GridPanel p;
-<<<<<<< HEAD
     private boolean running, contiguous;
-=======
-    private boolean running;
-    private boolean contiguous;
->>>>>>> 770a4557a135af7b0e60b97daf962da8806f11cd
     private int[][] grid;
     private int xSize, ySize, currentX, currentY, user;
     private Color user1, user2;
@@ -201,26 +196,12 @@ public class GameOfLife extends JFrame implements Runnable {
         speedMenu.add(customSpeed);
         return speedMenu;
     }
-    
-    // builds menu of option options
-    private JMenu buildOptionMenu() {
-        // initializes items
-        JMenu optionMenu = new JMenu("Options");
-        JMenuItem contiguousItem = new JMenuItem("+Contiguous");
-        // sets keyboard shortcuts for option options
-        contiguousItem.setAccelerator(KeyStroke.getKeyStroke("control C"));
-        // sets actions for item contiguous
-        contiguousItem.addActionListener(e -> setContiguous());
-        // adds the items and returns menu
-        optionMenu.add(contiguousItem);
-        return optionMenu;
-    }
 
     // builds menu of option options
     private JMenu buildOptionMenu() {
         // initializes items
         JMenu optionMenu = new JMenu("Options");
-        JMenuItem contiguousItem = new JMenuItem("Contiguous On");
+        JMenuItem contiguousItem = new JMenuItem("Contiguous");
         // sets keyboard shortcuts for option options
         contiguousItem.setAccelerator(KeyStroke.getKeyStroke("control C"));
         // sets actions for item contiguous
@@ -313,7 +294,6 @@ public class GameOfLife extends JFrame implements Runnable {
         // defines the different cell positions around the current cell
         // the ternary operators are to make sure that the grid wraps around and
         // doesn't hit an edge
-<<<<<<< HEAD
         if (contiguous) {
             right = grid[x == xSize - 1 ? 0 : x + 1][y];
             left = grid[x == 0 ? xSize - 1 : x - 1][y];
@@ -346,35 +326,6 @@ public class GameOfLife extends JFrame implements Runnable {
             rightdown = xhigh && ylow ? grid[x + 1][y - 1] : 0;
             leftup = xlow && yhigh ? grid[x - 1][y + 1] : 0;
             leftdown = xlow && ylow ? grid[x - 1][y - 1] : 0;
-=======
-        if (contiguous == true) {
-            int right = grid[x == xSize - 1 ? 0 : x + 1][y];
-            int left = grid[x == 0 ? xSize - 1 : x - 1][y];
-            int up = grid[x][y == ySize - 1 ? 0 : y + 1];
-            int down = grid[x][y == 0 ? ySize - 1 : y - 1];
-            
-            int rightup = grid[x == xSize - 1 ? 0 : x + 1][y == ySize - 1 ? 0
-                    : y + 1];
-            int rightdown = grid[x == xSize - 1 ? 0 : x + 1][y == 0 ? ySize - 1
-                    : y - 1];
-            int leftup = grid[x == 0 ? xSize - 1 : x - 1][y == ySize - 1 ? 0
-                    : y + 1];
-            int leftdown = grid[x == 0 ? xSize - 1 : x - 1][y == 0 ? ySize - 1
-                    : y - 1];
-        
-        // if contiguous option is false
-        // defines the different cell positions around the current cell
-        } else {
-            int right = grid[x + 1][y];
-            int left = grid[x - 1][y];
-            int up = grid[x][y + 1];
-            int down = grid[x][y - 1];
-            
-            int rightup = grid[x + 1][y + 1];
-            int rightdown = grid[x + 1][y - 1];
-            int leftup = grid[x - 1][y + 1];
-            int leftdown = grid[x - 1][y - 1];
->>>>>>> 770a4557a135af7b0e60b97daf962da8806f11cd
         }
 
         // adds the neighbor value if it is alive
@@ -501,10 +452,6 @@ public class GameOfLife extends JFrame implements Runnable {
         if (jfc.showOpenDialog(GameOfLife.this) == JFileChooser.APPROVE_OPTION)
             for (File f : jfc.getSelectedFiles())
                 shapeMenu.add(new ShapeMenuItem(f));
-    }
-    
-    private boolean setContiguous() {
-        return contiguous == true ? false : true;
     }
 
     // run method to start the game
