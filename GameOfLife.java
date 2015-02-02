@@ -20,6 +20,7 @@ public class GameOfLife extends JFrame implements Runnable {
     private Timer gameTimer;
     private GridPanel p;
     private boolean running;
+    private boolean contiguous;
     private int[][] grid;
     private int xSize, ySize, currentX, currentY, user;
     private Color user1, user2;
@@ -35,6 +36,7 @@ public class GameOfLife extends JFrame implements Runnable {
         xSize = 20;
         ySize = 20;
         user = 1;
+        contiguous = true;
 
         // build new blank grid
         grid = new int[xSize][ySize];
@@ -54,6 +56,7 @@ public class GameOfLife extends JFrame implements Runnable {
         // build the menus in the menu bar
         JMenu sizeMenu = buildSizeMenu();
         JMenu speedMenu = buildSpeedMenu();
+        JMenu optionMenu = buildOptionMenu();
         JMenu fileMenu = buildFileMenu();
 
         // initialize items in the menu bar
@@ -119,6 +122,7 @@ public class GameOfLife extends JFrame implements Runnable {
 
         // add menu items and menus
         mbar.add(fileMenu);
+        mbar.add(optionMenu);
         mbar.add(startItem);
         mbar.add(stepItem);
         mbar.add(userItem);
@@ -192,6 +196,20 @@ public class GameOfLife extends JFrame implements Runnable {
         });
         speedMenu.add(customSpeed);
         return speedMenu;
+    }
+    
+    // builds menu of option options
+    private JMenu buildOptionMenu() {
+        // initializes items
+        JMenu optionMenu = new JMenu("Options");
+        JMenuItem contiguousItem = new JMenuItem("+Contiguous");
+        // sets keyboard shortcuts for option options
+        contiguousItem.setAccelerator(KeyStroke.getKeyStroke("control C"));
+        // sets actions for item contiguous
+        contiguousItem.addActionListener(e -> setContiguous());
+        // adds the items and returns menu
+        optionMenu.add(contiguousItem);
+        return optionMenu;
     }
 
     // builds menu of file options
@@ -269,22 +287,38 @@ public class GameOfLife extends JFrame implements Runnable {
         // initializes an array list of integers to house the neighbors
         ArrayList<Integer> count = new ArrayList<>();
 
+        // if contiguous option is true
         // defines the different cell positions around the current cell
         // the ternary operators are to make sure that the grid wraps around and
         // doesn't hit an edge
-        int right = grid[x == xSize - 1 ? 0 : x + 1][y];
-        int left = grid[x == 0 ? xSize - 1 : x - 1][y];
-        int up = grid[x][y == ySize - 1 ? 0 : y + 1];
-        int down = grid[x][y == 0 ? ySize - 1 : y - 1];
-
-        int rightup = grid[x == xSize - 1 ? 0 : x + 1][y == ySize - 1 ? 0
-                : y + 1];
-        int rightdown = grid[x == xSize - 1 ? 0 : x + 1][y == 0 ? ySize - 1
-                : y - 1];
-        int leftup = grid[x == 0 ? xSize - 1 : x - 1][y == ySize - 1 ? 0
-                : y + 1];
-        int leftdown = grid[x == 0 ? xSize - 1 : x - 1][y == 0 ? ySize - 1
-                : y - 1];
+        if (contiguous == true) {
+            int right = grid[x == xSize - 1 ? 0 : x + 1][y];
+            int left = grid[x == 0 ? xSize - 1 : x - 1][y];
+            int up = grid[x][y == ySize - 1 ? 0 : y + 1];
+            int down = grid[x][y == 0 ? ySize - 1 : y - 1];
+            
+            int rightup = grid[x == xSize - 1 ? 0 : x + 1][y == ySize - 1 ? 0
+                    : y + 1];
+            int rightdown = grid[x == xSize - 1 ? 0 : x + 1][y == 0 ? ySize - 1
+                    : y - 1];
+            int leftup = grid[x == 0 ? xSize - 1 : x - 1][y == ySize - 1 ? 0
+                    : y + 1];
+            int leftdown = grid[x == 0 ? xSize - 1 : x - 1][y == 0 ? ySize - 1
+                    : y - 1];
+        
+        // if contiguous option is false
+        // defines the different cell positions around the current cell
+        } else {
+            int right = grid[x + 1][y];
+            int left = grid[x - 1][y];
+            int up = grid[x][y + 1];
+            int down = grid[x][y - 1];
+            
+            int rightup = grid[x + 1][y + 1];
+            int rightdown = grid[x + 1][y - 1];
+            int leftup = grid[x - 1][y + 1];
+            int leftdown = grid[x - 1][y - 1];
+        }
 
         // adds the neighbor value if it is alive
         if (right != 0)
@@ -410,6 +444,10 @@ public class GameOfLife extends JFrame implements Runnable {
         if (jfc.showOpenDialog(GameOfLife.this) == JFileChooser.APPROVE_OPTION)
             for (File f : jfc.getSelectedFiles())
                 shapeMenu.add(new ShapeMenuItem(f));
+    }
+    
+    private boolean setContiguous() {
+        return contiguous == true ? false : true;
     }
 
     // run method to start the game
