@@ -610,8 +610,7 @@ public class GameOfLife extends JFrame implements Runnable {
         private static final long serialVersionUID = 770975188019509393L;
         private final File shapeFile;
         private int[][] sGrid;
-        private int xSize;
-        private int ySize;
+        private int cxSize, cySize;
 
         public ShapeMenuItem(File _shapeFile) {
             // sets name of the shape and the file to open
@@ -629,18 +628,18 @@ public class GameOfLife extends JFrame implements Runnable {
                 reader.mark(10000);
                 // get shape size to create the grid by counting lines and
                 // characters on each line
-                ySize = reader.readLine().length();
-                xSize = Files.readAllLines(
+                cySize = reader.readLine().length();
+                cxSize = Files.readAllLines(
                         Paths.get(shapeFile.getAbsolutePath()),
                         Charset.defaultCharset()).size() - 2;
-                sGrid = new int[ySize][xSize];
+                sGrid = new int[cySize][cxSize];
                 // resets back to the top of the shape
                 reader.reset();
                 // loops through each line of the shape and converts the
                 // characters to cell states
                 String line = reader.readLine();
-                for (int x = 0; x < xSize; x++) {
-                    for (int y = 0; y < ySize; y++)
+                for (int x = 0; x < cxSize; x++) {
+                    for (int y = 0; y < cySize; y++)
                         sGrid[y][x] = line.charAt(y) == '.' ? 0 : line
                                 .charAt(y) == 'O' ? 1 : 2;
                     // move to next line and repeat
@@ -666,19 +665,17 @@ public class GameOfLife extends JFrame implements Runnable {
             // adds the action listener to put the file into the current grid
             // and repaint
             addActionListener(e -> {
-                try {
-                    for (int x = 0; x < xSize; x++)
-                        for (int y = 0; y < ySize; y++)
+                if (cxSize + currentX < xSize || cySize + currentY < ySize) {
+                    for (int x = 0; x < cxSize; x++)
+                        for (int y = 0; y < cySize; y++)
                             grid[y + currentY][x + currentX] = sGrid[y][x] == 1 ? user
                                     : sGrid[y][x] == 2 ? (user == 1 ? user + 1
                                     : user - 1) : 0;
                     p.repaint();
                     // catch array out of bounds error and prompt user that the
                     // shape is too big for the grid
-                } catch (ArrayIndexOutOfBoundsException ex) {
-                    JOptionPane
-                            .showMessageDialog(this, "Shape to big for grid");
-                }
+                } else
+                    JOptionPane.showMessageDialog(this, "Shape too big for grid.");
             });
         }
     }
