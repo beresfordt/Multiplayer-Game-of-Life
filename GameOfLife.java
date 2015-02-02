@@ -201,7 +201,7 @@ public class GameOfLife extends JFrame implements Runnable {
     private JMenu buildOptionMenu() {
         // initializes items
         JMenu optionMenu = new JMenu("Options");
-        JMenuItem contiguousItem = new JMenuItem("Contiguous");
+        JMenuItem contiguousItem = new JMenuItem("Contiguous On");
         // sets keyboard shortcuts for option options
         contiguousItem.setAccelerator(KeyStroke.getKeyStroke("control C"));
         // sets actions for item contiguous
