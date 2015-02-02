@@ -13,32 +13,25 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class gameoflife extends JFrame implements Runnable {
+public class GameOfLife extends JFrame implements Runnable {
 
     // define needed state variable
     private static final long serialVersionUID = -6912109370693886742L;
-    private boolean edit;
     private Timer gameTimer;
-    private gridPanel p;
+    private GridPanel p;
     private boolean running;
     private int[][] grid;
-    private int xSize;
-    private int ySize;
-    private int currentX;
-    private int currentY;
-    private int user;
-    private Color user1;
-    private Color user2;
+    private int xSize, ySize, currentX, currentY, user;
+    private Color user1, user2;
     private JPopupMenu shapeMenu;
 
     // initialize state variables
-    public gameoflife() {
+    public GameOfLife() {
         setTitle("Multiplayer Game of Life");
         user1 = Color.GREEN.darker();
         user2 = Color.BLUE;
         gameTimer = new Timer(100, (e) -> nextStep());
-        edit = true;
-        p = new gridPanel();
+        p = new GridPanel();
         xSize = 20;
         ySize = 20;
         user = 1;
@@ -50,7 +43,7 @@ public class gameoflife extends JFrame implements Runnable {
     // initialize the program entirely and run the runnable method
     // to start the game
     public static void main(String[] args) {
-        javax.swing.SwingUtilities.invokeLater(new gameoflife());
+        javax.swing.SwingUtilities.invokeLater(new GameOfLife());
     }
 
     // build the top menu bar
@@ -106,25 +99,23 @@ public class gameoflife extends JFrame implements Runnable {
         // starts the game continuously
         startItem.addActionListener(e -> {
             // reverse the running boolean
-                running = !running;
-                startItem.setText(running ? "Stop" : "Start");
-                // make board uneditable
-            edit = ! running;
+            running = !running;
+            startItem.setText(running ? "Stop" : "Start");
 
-                // while running, user cannot be able to click other buttons
-                stepItem.setEnabled(!running);
-                clearItem.setEnabled(!running);
-                userItem.setEnabled(!running);
-                colorItem.setEnabled(!running);
-                sizeMenu.setEnabled(!running);
-                speedMenu.setEnabled(!running);
+            // while running, user cannot be able to click other buttons
+            stepItem.setEnabled(!running);
+            clearItem.setEnabled(!running);
+            userItem.setEnabled(!running);
+            colorItem.setEnabled(!running);
+            sizeMenu.setEnabled(!running);
+            speedMenu.setEnabled(!running);
 
-                // start animation
-                if (running)
-                    gameTimer.start();
-                else
-                    gameTimer.stop();
-            });
+            // start animation
+            if (running)
+                gameTimer.start();
+            else
+                gameTimer.stop();
+        });
 
         // add menu items and menus
         mbar.add(fileMenu);
@@ -243,12 +234,12 @@ public class gameoflife extends JFrame implements Runnable {
                 // cells
                 if (grid[x][y] == 0 && neighbors.size() == 3)
                     newGrid[x][y] = oneCount > twoCount ? 1 : 2;
-                // checks if a lives cell has too few or too many neighbors and
-                // sets it dead or alive accordingly
+                    // checks if a lives cell has too few or too many neighbors and
+                    // sets it dead or alive accordingly
                 else if (grid[x][y] == 1 || grid[x][y] == 2)
                     newGrid[x][y] = (neighbors.size() < 2 || neighbors.size() > 3) ? 0
                             : grid[x][y];
-                // if none of previous rules, set cell to dead
+                    // if none of previous rules, set cell to dead
                 else
                     newGrid[x][y] = 0;
             }
@@ -365,7 +356,7 @@ public class gameoflife extends JFrame implements Runnable {
         // applies the lexicon file type filter
         jfc.setFileFilter(new CellFileFilter());
         // shows the dialog and asks for save location
-        int willSave = jfc.showSaveDialog(gameoflife.this);
+        int willSave = jfc.showSaveDialog(GameOfLife.this);
         // continue if user chooses a save location
         if (willSave == JFileChooser.APPROVE_OPTION) {
             // sets the current file and adds file extension if not already
@@ -416,7 +407,7 @@ public class gameoflife extends JFrame implements Runnable {
         JFileChooser jfc = new JFileChooser();
         jfc.setFileFilter(new CellFileFilter());
         jfc.setMultiSelectionEnabled(true);
-        if (jfc.showOpenDialog(gameoflife.this) == JFileChooser.APPROVE_OPTION)
+        if (jfc.showOpenDialog(GameOfLife.this) == JFileChooser.APPROVE_OPTION)
             for (File f : jfc.getSelectedFiles())
                 shapeMenu.add(new ShapeMenuItem(f));
     }
@@ -445,9 +436,9 @@ public class gameoflife extends JFrame implements Runnable {
                 // open shape menu
                 if (SwingUtilities.isRightMouseButton(e))
                     shapeMenu.show(e.getComponent(), e.getX(), e.getY());
-                // if it isn't a right click, and the grid is editable, toggle
-                // the cell state and repaint
-                else if (edit) {
+                    // if it isn't a right click, and the grid is editable, toggle
+                    // the cell state and repaint
+                else if (!running) {
                     grid[currentY][currentX] = (grid[currentY][currentX] == user ? 0
                             : user);
                     p.repaint();
@@ -481,7 +472,7 @@ public class gameoflife extends JFrame implements Runnable {
 
                 // checks if the board is editable, and if the mouse is on the
                 // screen
-                if (edit && (currentY < xSize && currentY >= 0)
+                if (!running && (currentY < xSize && currentY >= 0)
                         && (currentX < ySize && currentX >= 0)) {
                     // if the button used is the left click, then it turns cells
                     // on
@@ -513,11 +504,11 @@ public class gameoflife extends JFrame implements Runnable {
     }
 
     /*
-     * ======= CLASSES =======
+     * = INNER CLASSES =
      */
 
     // defines the panel the grid is drawn
-    class gridPanel extends JPanel {
+    class GridPanel extends JPanel {
 
         private static final long serialVersionUID = -897367256144487579L;
 
@@ -648,7 +639,7 @@ public class gameoflife extends JFrame implements Runnable {
                         for (int y = 0; y < ySize; y++)
                             grid[y + currentY][x + currentX] = sGrid[y][x] == 1 ? user
                                     : sGrid[y][x] == 2 ? (user == 1 ? user + 1
-                                            : user - 1) : 0;
+                                    : user - 1) : 0;
                     p.repaint();
                     // catch array out of bounds error and prompt user that the
                     // shape is too big for the grid
