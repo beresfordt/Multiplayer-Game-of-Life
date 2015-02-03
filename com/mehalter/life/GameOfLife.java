@@ -1,3 +1,5 @@
+package com.mehalter.life;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import java.awt.*;
