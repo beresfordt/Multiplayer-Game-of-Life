@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 public class GameOfLife extends JFrame implements Runnable {
 
@@ -201,16 +202,68 @@ public class GameOfLife extends JFrame implements Runnable {
     private JMenu buildOptionMenu() {
         // initializes items
         JMenu optionMenu = new JMenu("Options");
-        JMenuItem contiguousItem = new JMenuItem("Contiguous");
+        JMenuItem contiguousItem = new JMenuItem("Contiguous: " + (contiguous ? "On" : "Off"));
+        JMenuItem randomItem = new JMenuItem("Random Start...");
         // sets keyboard shortcuts for option options
         contiguousItem.setAccelerator(KeyStroke.getKeyStroke("control C"));
+        randomItem.setAccelerator(KeyStroke.getKeyStroke("control shift N"));
         // sets actions for item contiguous
         contiguousItem.addActionListener(e -> {
             contiguous = ! contiguous;
-            contiguousItem.setText("Contiguous " + (contiguous ? "On" : "Off"));
+            contiguousItem.setText("Contiguous: " + (contiguous ? "On" : "Off"));
+        });
+        //Sets a random configuration on the board.
+        randomItem.addActionListener(e -> {
+            try {
+                //Prompt the user for the desired population density
+                double r = Double.parseDouble(JOptionPane.showInputDialog(this,
+                        "Enter population density (under 1)"));
+                //Ask the user if they want a single or double strain board
+                int a = JOptionPane.showOptionDialog(null,
+                        "One or two cell lines?", "Feedback",
+                        JOptionPane.OK_CANCEL_OPTION,
+                        JOptionPane.INFORMATION_MESSAGE,
+                        null, new String[]{"Single Strain", "Two Strain"},
+                        "default");
+                //checks if the number is valid
+                if (r < 1) {
+                    //clear the current grid
+                    grid = new int[xSize][ySize];
+                    //initialize new Random object to generate random numbers
+                    Random rand = new Random();
+                    //initialize lists of X and Y coordinates
+                    ArrayList<Integer> newXs = new ArrayList<>();
+                    ArrayList<Integer> newYs = new ArrayList<>();
+                    for (int i = 0; i < (int) (xSize * ySize * r); i++) {
+                        //generates new random x and y and checks if it is used before
+                        int tempX = rand.nextInt(xSize);
+                        int tempY = rand.nextInt(ySize);
+                        boolean newP = ! newXs.contains(tempX);
+                        if (! newP)
+                            newP = ! (newYs.get(newXs.indexOf(tempX)) == tempY);
+                        if (newP)
+                            //if the point has not been used, then it is added to the list of random points
+                            newXs.add(tempX);
+                        newYs.add(tempY);
+                        //random point is added to the grid, and moves on to the next point
+                        //if the user wants a two strain random grid, then it chooses a 1 or 2 randomly
+                        grid[tempX][tempY] = (a == JOptionPane.OK_OPTION) ? 1 : rand.nextInt(2) + 1;
+                    }
+                    p.repaint();
+                }
+                //if the number is not above 1 or if the answer is not a number
+                //then it prompts the user with an error message
+                else
+                    JOptionPane
+                            .showMessageDialog(this, "Invalid Density");
+            } catch (java.lang.NumberFormatException n) {
+                JOptionPane
+                        .showMessageDialog(this, "Invalid Density");
+            }
         });
         // adds the items and returns menu
         optionMenu.add(contiguousItem);
+        optionMenu.add(randomItem);
         return optionMenu;
     }
 
@@ -274,10 +327,9 @@ public class GameOfLife extends JFrame implements Runnable {
         // initializes temporary grid of new size
         int[][] newGrid = new int[newXSize][newYSize];
         // translates the old grid to the new
-        for (int x = 0; x < xSize; x++)
-            for (int y = 0; y < ySize; y++)
-                if (x < newXSize - 1 && y < newYSize - 1)
-                    newGrid[x][y] = grid[x][y];
+        for (int x = 0; x < xSize && x < newXSize - 1; x++)
+            for (int y = 0; y < ySize && y < newYSize - 1; y++)
+                newGrid[x][y] = grid[x][y];
         // resets the x and y size variables and returns the new grid
         xSize = newXSize;
         ySize = newYSize;
