@@ -220,15 +220,15 @@ public class GameOfLife extends JFrame implements Runnable {
                 //Prompt the user for the desired population density
                 double r = Double.parseDouble(JOptionPane.showInputDialog(this,
                         "Enter population density (under 1)"));
-                //Ask the user if they want a single or double strain board
-                int a = JOptionPane.showOptionDialog(null,
-                        "One or two cell lines?", "Feedback",
-                        JOptionPane.OK_CANCEL_OPTION,
-                        JOptionPane.INFORMATION_MESSAGE,
-                        null, new String[]{"Single Strain", "Two Strain"},
-                        "default");
                 //checks if the number is valid
                 if (r < 1) {
+                    //Ask the user if they want a single or double strain board
+                    int a = JOptionPane.showOptionDialog(null,
+                            "One or two cell lines?", "Feedback",
+                            JOptionPane.OK_CANCEL_OPTION,
+                            JOptionPane.INFORMATION_MESSAGE,
+                            null, new String[]{"Single Strain", "Two Strain"},
+                            "default");
                     //clear the current grid
                     grid = new int[xSize][ySize];
                     //initialize new Random object to generate random numbers
