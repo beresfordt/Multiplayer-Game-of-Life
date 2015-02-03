@@ -1,7 +1,5 @@
 package com.mehalter.life.model;
 
-import com.mehalter.life.model.GridPanel;
-
 import javax.swing.*;
 import java.awt.*;
 
