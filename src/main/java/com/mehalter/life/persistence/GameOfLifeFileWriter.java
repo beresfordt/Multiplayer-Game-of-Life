@@ -144,10 +144,10 @@ public class GameOfLifeFileWriter {
             // adds the action listener to put the file into the current grid
             // and repaint
             addActionListener(e -> {
-                if (cxSize + gameState.getCurrentX() < gameState.getxSize() || cySize + gameState.getCurrentY() < gameState.getxSize()) {
+                if (cxSize + gameState.getCurrentX() < gameState.getGridPanel().getxSize() || cySize + gameState.getCurrentY() < gameState.getGridPanel().getxSize()) {
                     for (int x = 0; x < cxSize; x++)
                         for (int y = 0; y < cySize; y++)
-                            gameState.getGrid()[y + gameState.getCurrentY()][x + gameState.getCurrentX()] = sGrid[y][x] == 1 ? gameState.getCurrentUser()
+                            gameState.getGridPanel().getGrid()[y + gameState.getCurrentY()][x + gameState.getCurrentX()] = sGrid[y][x] == 1 ? gameState.getCurrentUser()
                                     : sGrid[y][x] == 2 ? (gameState.getCurrentUser() == 1 ? gameState.getCurrentUser() + 1
                                     : gameState.getCurrentUser() - 1) : 0;
                     gameState.getGridPanel().repaint();

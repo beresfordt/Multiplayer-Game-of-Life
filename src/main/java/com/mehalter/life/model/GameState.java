@@ -1,30 +1,21 @@
 package com.mehalter.life.model;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class GameState {
     private Timer gameTimer;
     private GridPanel gridPanel;
     private boolean running, contiguous;
-    private int[][] grid;
-    private int xSize, ySize, currentX, currentY, currentUser;
-    private Color user1, user2;
+    private int currentX, currentY, currentUser;
 
-    public GameState(Timer gameTimer) {
+    public GameState(Timer gameTimer, GridPanel gridPanel) {
         this.gameTimer = gameTimer;
         this.running = false;
         this.contiguous = true;
-        this.grid = new int[20][20];
-        this.xSize = 20;
-        this.ySize = 20;
         this.currentX = 0;
         this.currentY = 0;
         this.currentUser = 1;
-        this.user1 = Color.GREEN.darker();
-        this.user2 = Color.BLUE;
-
-        this.gridPanel = new GridPanel(this.xSize, this.ySize, this.user1, this.user2, this.grid);
+        this.gridPanel = gridPanel;
     }
 
     public Timer getGameTimer() {
@@ -51,30 +42,6 @@ public class GameState {
         this.contiguous = contiguous;
     }
 
-    public int[][] getGrid() {
-        return grid;
-    }
-
-    public void setGrid(int[][] grid) {
-        this.grid = grid;
-    }
-
-    public int getxSize() {
-        return xSize;
-    }
-
-    public void setxSize(int xSize) {
-        this.xSize = xSize;
-    }
-
-    public int getySize() {
-        return ySize;
-    }
-
-    public void setySize(int ySize) {
-        this.ySize = ySize;
-    }
-
     public int getCurrentX() {
         return currentX;
     }
@@ -97,22 +64,6 @@ public class GameState {
 
     public void switchCurrentUser() {
         currentUser = getCurrentUser() == 1 ? 2 : 1;
-    }
-
-    public Color getUser1() {
-        return user1;
-    }
-
-    public void setUser1(Color user1) {
-        this.user1 = user1;
-    }
-
-    public Color getUser2() {
-        return user2;
-    }
-
-    public void setUser2(Color user2) {
-        this.user2 = user2;
     }
 
     public void setGameTimer(Timer gameTimer) {

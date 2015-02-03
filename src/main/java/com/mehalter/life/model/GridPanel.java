@@ -7,14 +7,13 @@ import java.awt.geom.Rectangle2D;
 public class GridPanel extends JPanel {
 
     private static final long serialVersionUID = - 897367256144487579L;
-    private final int xSize;
-    private final int ySize;
-    private final Color user1;
-    private final Color user2;
-    private final int[][] grid;
+    private int xSize;
+    private int ySize;
+    private Color user1;
+    private Color user2;
+    private int[][] grid;
 
     public GridPanel(int xSize, int ySize, Color user1, Color user2, int[][] grid) {
-
         this.xSize = xSize;
         this.ySize = ySize;
         this.user1 = user1;
@@ -44,5 +43,45 @@ public class GridPanel extends JPanel {
                 g2.draw(r2d);
             }
         }
+    }
+
+    public int getxSize() {
+        return xSize;
+    }
+
+    public void setxSize(int xSize) {
+        this.xSize = xSize;
+    }
+
+    public int getySize() {
+        return ySize;
+    }
+
+    public void setySize(int ySize) {
+        this.ySize = ySize;
+    }
+
+    public Color getUser1() {
+        return user1;
+    }
+
+    public void setUser1(Color user1) {
+        this.user1 = user1;
+    }
+
+    public Color getUser2() {
+        return user2;
+    }
+
+    public void setUser2(Color user2) {
+        this.user2 = user2;
+    }
+
+    public int[][] getGrid() {
+        return grid;
+    }
+
+    public void setGrid(int[][] grid) {
+        this.grid = grid;
     }
 }
