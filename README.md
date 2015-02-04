@@ -16,10 +16,13 @@ Requires: Java8
 I. Description
 --------------
 
-Usage :
+Usage:
 
-1. **~$ javac /path/to/gameoflife.java**
-2. **~$ java gameoflife**
+1. **~$ javac com/mehalter/life/model/*.java**
+2. **~$ javac com/mehalter/life/ui/*.java**
+3. **~$ javac com/mehalter/life/persistence/*.java**
+4. **~$ javac com/mehalter/life/*.java**
+5. **~$ java -cp ./ com.mehalter.life.GameOfLifeRunner**
 
 
 
