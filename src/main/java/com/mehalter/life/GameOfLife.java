@@ -1,8 +1,8 @@
 package com.mehalter.life;
 
 import com.mehalter.life.model.GameState;
-import com.mehalter.life.ui.GridPanel;
 import com.mehalter.life.ui.GameOfLifeUi;
+import com.mehalter.life.ui.GridPanel;
 
 import javax.swing.*;
 import java.awt.*;
