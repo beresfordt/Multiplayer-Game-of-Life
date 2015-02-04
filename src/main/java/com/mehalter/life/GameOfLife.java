@@ -2,6 +2,7 @@ package com.mehalter.life;
 
 import com.mehalter.life.model.GameState;
 import com.mehalter.life.ui.GameOfLifeUi;
+import com.mehalter.life.ui.GridPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,13 +20,8 @@ public class GameOfLife implements Runnable {
 
     // initialize state variables
     public GameOfLife() {
-<<<<<<< HEAD
-        gameState = new GameState(new Timer(100, (e) -> nextStep()), 20, 20, Color.GREEN.darker(), Color.BLUE);
-        gameOfLifeUi = new GameOfLifeUi(this, gameState);
-=======
         gameState = new GameState(new Timer(100, (e) -> nextStep()), 20, 20, Color.GREEN.darker(), Color.BLUE, new int[20][20]);
         gameOfLifeUi = new GameOfLifeUi(this, gameState, new GridPanel(gameState));
->>>>>>> 3751e392785e6f25f9070c09c3874360bc74713b
     }
 
     // calculates the next step of the grid based on the current grid layout
@@ -59,11 +55,7 @@ public class GameOfLife implements Runnable {
         }
         // moves the temporary grid to the used grid and repaints
         gameState.setGrid(newGrid);
-<<<<<<< HEAD
-        gameState.repaint();
-=======
         gameOfLifeUi.getGridPanel().repaint();
->>>>>>> 3751e392785e6f25f9070c09c3874360bc74713b
     }
 
     // method to return array of a cell's neighbors
@@ -141,28 +133,17 @@ public class GameOfLife implements Runnable {
         // initialize the right-click shape pop-up menu
 
         // add grid panel to the window for viewing
-<<<<<<< HEAD
-        gameOfLifeUi.getContentPane().add(gameState);
-        // add mouse listener to listen for clicks on the grid
-        gameState.addMouseListener(new MouseListener() {
-=======
         gameOfLifeUi.getContentPane().add(gameOfLifeUi.getGridPanel());
         // add mouse listener to listen for clicks on the grid
         gameOfLifeUi.getGridPanel().addMouseListener(new MouseListener() {
->>>>>>> 3751e392785e6f25f9070c09c3874360bc74713b
             @Override
             public void mouseClicked(MouseEvent e) {
                 // gets current location on the panel and divides it by the size
                 // of the panel and size of the grid to get the box number
                 // uses a double in the denominator to force an integer divide
                 // to force the final value to round down
-<<<<<<< HEAD
-                gameState.setCurrentY((int) (e.getX() / ((double) gameState.getWidth() / gameState.getxSize())));
-                gameState.setCurrentX((int) (e.getY() / ((double) gameState.getHeight() / gameState.getxSize())));
-=======
                 gameState.setCurrentY((int) (e.getX() / ((double) gameOfLifeUi.getGridPanel().getWidth() / gameState.getxSize())));
                 gameState.setCurrentX((int) (e.getY() / ((double) gameOfLifeUi.getGridPanel().getHeight() / gameState.getxSize())));
->>>>>>> 3751e392785e6f25f9070c09c3874360bc74713b
                 // if the click is a right click, don't toggle cell state, but
                 // open shape menu
                 if (SwingUtilities.isRightMouseButton(e))
@@ -172,11 +153,7 @@ public class GameOfLife implements Runnable {
                 else if (! gameState.isRunning()) {
                     gameState.getGrid()[gameState.getCurrentY()][gameState.getCurrentX()] = (gameState.getGrid()[gameState.getCurrentY()][gameState.getCurrentX()] == gameState.getCurrentUser() ? 0
                             : gameState.getCurrentUser());
-<<<<<<< HEAD
-                    gameState.repaint();
-=======
                     gameOfLifeUi.getGridPanel().repaint();
->>>>>>> 3751e392785e6f25f9070c09c3874360bc74713b
                 }
             }
 
@@ -197,22 +174,13 @@ public class GameOfLife implements Runnable {
             public void mouseExited(MouseEvent e) {
             }
         });
-<<<<<<< HEAD
-        gameState.addMouseMotionListener(new MouseMotionListener() {
-=======
         gameOfLifeUi.getGridPanel().addMouseMotionListener(new MouseMotionListener() {
->>>>>>> 3751e392785e6f25f9070c09c3874360bc74713b
 
             @Override
             public void mouseDragged(MouseEvent e) {
                 // Allow user to click and drag mouse to toggle cell states
-<<<<<<< HEAD
-                gameState.setCurrentY((int) (e.getX() / ((double) gameState.getWidth() / gameState.getxSize())));
-                gameState.setCurrentX((int) (e.getY() / ((double) gameState.getHeight() / gameState.getxSize())));
-=======
                 gameState.setCurrentY((int) (e.getX() / ((double) gameOfLifeUi.getGridPanel().getWidth() / gameState.getxSize())));
                 gameState.setCurrentX((int) (e.getY() / ((double) gameOfLifeUi.getGridPanel().getHeight() / gameState.getxSize())));
->>>>>>> 3751e392785e6f25f9070c09c3874360bc74713b
 
                 // checks if the board is editable, and if the mouse is on the
                 // screen
@@ -231,11 +199,7 @@ public class GameOfLife implements Runnable {
                             // becomes an eraser
                             // and deletes everything
                             : 0;
-<<<<<<< HEAD
-                    gameState.repaint();
-=======
                     gameOfLifeUi.getGridPanel().repaint();
->>>>>>> 3751e392785e6f25f9070c09c3874360bc74713b
                 }
             }
 

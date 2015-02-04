@@ -72,11 +72,7 @@ public class GameOfLifeUi extends JFrame {
         });
         // asks user to pick a color to change the current user to
         colorItem.addActionListener(e -> {
-<<<<<<< HEAD
-            Color tempColor = JColorChooser.showDialog(gameState, "Choose a Color",
-=======
             Color tempColor = JColorChooser.showDialog(gridPanel, "Choose a Color",
->>>>>>> 3751e392785e6f25f9070c09c3874360bc74713b
                     gameState.getCurrentUser() == 1 ? gameState.getUser1() : gameState.getUser2());
             if (tempColor != null) {
                 if (gameState.getCurrentUser() == 1) {
@@ -85,21 +81,13 @@ public class GameOfLifeUi extends JFrame {
                     gameState.setUser2(tempColor);
                 }
             }
-<<<<<<< HEAD
-            gameState.repaint();
-=======
             gridPanel.repaint();
->>>>>>> 3751e392785e6f25f9070c09c3874360bc74713b
         });
         // creates a new grid
         clearItem.addActionListener(e -> {
             int[][] grid = new int[gameState.getxSize()][gameState.getySize()];
             gameState.setGrid(grid);
-<<<<<<< HEAD
-            gameState.repaint();
-=======
             gridPanel.repaint();
->>>>>>> 3751e392785e6f25f9070c09c3874360bc74713b
         });
         // starts the game continuously
         startItem.addActionListener(e -> {
@@ -250,11 +238,7 @@ public class GameOfLifeUi extends JFrame {
                         //if the user wants a two strain random grid, then it chooses a 1 or 2 randomly
                         gameState.getGrid()[tempX][tempY] = (a == JOptionPane.OK_OPTION) ? 1 : rand.nextInt(2) + 1;
                     }
-<<<<<<< HEAD
-                    gameState.repaint();
-=======
                     gridPanel.repaint();
->>>>>>> 3751e392785e6f25f9070c09c3874360bc74713b
                 }
                 //if the number is not above 1 or if the answer is not a number
                 //then it prompts the user with an error message
@@ -354,11 +338,7 @@ public class GameOfLifeUi extends JFrame {
             // repaint
             addActionListener(e -> {
                 gameState.setGrid(resizeGrid(x, y));
-<<<<<<< HEAD
-                gameState.repaint();
-=======
                 gridPanel.repaint();
->>>>>>> 3751e392785e6f25f9070c09c3874360bc74713b
             });
         }
     }
