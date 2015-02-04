@@ -16,17 +16,23 @@ public class GameOfLifeUi extends JFrame {
 
     private GameOfLife gameOfLife;
     private GameState gameState;
+    private GridPanel gridPanel;
     private JPopupMenu shapeMenu;
     private GameOfLifeFileWriter fileWriter;
 
-    public GameOfLifeUi(GameOfLife gameOfLife, GameState gameState) {
+    public GameOfLifeUi(GameOfLife gameOfLife, GameState gameState, GridPanel gridPanel) {
         this.gameOfLife = gameOfLife;
         this.gameState = gameState;
+        this.gridPanel = gridPanel;
         this.fileWriter = new GameOfLifeFileWriter(this, gameState);
     }
 
     public JPopupMenu getShapeMenu() {
         return shapeMenu;
+    }
+
+    public GridPanel getGridPanel() {
+        return gridPanel;
     }
 
     public void makeMenus() {
@@ -65,22 +71,22 @@ public class GameOfLifeUi extends JFrame {
         });
         // asks user to pick a color to change the current user to
         colorItem.addActionListener(e -> {
-            Color tempColor = JColorChooser.showDialog(gameState.getGridPanel(), "Choose a Color",
-                    gameState.getCurrentUser() == 1 ? gameState.getGridPanel().getUser1() : gameState.getGridPanel().getUser2());
+            Color tempColor = JColorChooser.showDialog(gridPanel, "Choose a Color",
+                    gameState.getCurrentUser() == 1 ? gameState.getUser1() : gameState.getUser2());
             if (tempColor != null) {
                 if (gameState.getCurrentUser() == 1) {
-                    gameState.getGridPanel().setUser1(tempColor);
+                    gameState.setUser1(tempColor);
                 } else {
-                    gameState.getGridPanel().setUser2(tempColor);
+                    gameState.setUser2(tempColor);
                 }
             }
-            gameState.getGridPanel().repaint();
+            gridPanel.repaint();
         });
         // creates a new grid
         clearItem.addActionListener(e -> {
-            int[][] grid = new int[gameState.getGridPanel().getxSize()][gameState.getGridPanel().getySize()];
-            gameState.getGridPanel().setGrid(grid);
-            gameState.getGridPanel().repaint();
+            int[][] grid = new int[gameState.getxSize()][gameState.getySize()];
+            gameState.setGrid(grid);
+            gridPanel.repaint();
         });
         // starts the game continuously
         startItem.addActionListener(e -> {
@@ -207,17 +213,17 @@ public class GameOfLifeUi extends JFrame {
                 //checks if the number is valid
                 if (r < 1) {
                     //clear the current grid
-                    int[][] grid = new int[gameState.getGridPanel().getxSize()][gameState.getGridPanel().getySize()];
-                    gameState.getGridPanel().setGrid(grid);
+                    int[][] grid = new int[gameState.getxSize()][gameState.getySize()];
+                    gameState.setGrid(grid);
                     //initialize new Random object to generate random numbers
                     Random rand = new Random();
                     //initialize lists of X and Y coordinates
                     ArrayList<Integer> newXs = new ArrayList<>();
                     ArrayList<Integer> newYs = new ArrayList<>();
-                    for (int i = 0; i < (int) (gameState.getGridPanel().getxSize() * gameState.getGridPanel().getySize() * r); i++) {
+                    for (int i = 0; i < (int) (gameState.getxSize() * gameState.getySize() * r); i++) {
                         //generates new random x and y and checks if it is used before
-                        int tempX = rand.nextInt(gameState.getGridPanel().getxSize());
-                        int tempY = rand.nextInt(gameState.getGridPanel().getySize());
+                        int tempX = rand.nextInt(gameState.getxSize());
+                        int tempY = rand.nextInt(gameState.getySize());
                         boolean newP = ! newXs.contains(tempX);
                         if (! newP) {
                             newP = ! (newYs.get(newXs.indexOf(tempX)) == tempY);
@@ -229,9 +235,9 @@ public class GameOfLifeUi extends JFrame {
                         newYs.add(tempY);
                         //random point is added to the grid, and moves on to the next point
                         //if the user wants a two strain random grid, then it chooses a 1 or 2 randomly
-                        gameState.getGridPanel().getGrid()[tempX][tempY] = (a == JOptionPane.OK_OPTION) ? 1 : rand.nextInt(2) + 1;
+                        gameState.getGrid()[tempX][tempY] = (a == JOptionPane.OK_OPTION) ? 1 : rand.nextInt(2) + 1;
                     }
-                    gameState.getGridPanel().repaint();
+                    gridPanel.repaint();
                 }
                 //if the number is not above 1 or if the answer is not a number
                 //then it prompts the user with an error message
@@ -276,12 +282,12 @@ public class GameOfLifeUi extends JFrame {
         // initializes temporary grid of new size
         int[][] newGrid = new int[newXSize][newYSize];
         // translates the old grid to the new
-        for (int x = 0; x < gameState.getGridPanel().getxSize() && x < newXSize - 1; x++)
-            for (int y = 0; y < gameState.getGridPanel().getySize() && y < newYSize - 1; y++)
-                newGrid[x][y] = gameState.getGridPanel().getGrid()[x][y];
+        for (int x = 0; x < gameState.getxSize() && x < newXSize - 1; x++)
+            for (int y = 0; y < gameState.getySize() && y < newYSize - 1; y++)
+                newGrid[x][y] = gameState.getGrid()[x][y];
         // resets the x and y size variables and returns the new grid
-        gameState.getGridPanel().setxSize(newXSize);
-        gameState.getGridPanel().setySize(newYSize);
+        gameState.setxSize(newXSize);
+        gameState.setySize(newYSize);
         return newGrid;
     }
 
@@ -294,9 +300,9 @@ public class GameOfLifeUi extends JFrame {
         int lastCol = - 1;
 
         // loops through and marks the x and y boundaries of the live cells
-        for (int y = 0; y < gameState.getGridPanel().getxSize(); y++)
-            for (int x = 0; x < gameState.getGridPanel().getxSize(); x++)
-                if (gameState.getGridPanel().getGrid()[x][y] != 0) {
+        for (int y = 0; y < gameState.getxSize(); y++)
+            for (int x = 0; x < gameState.getxSize(); x++)
+                if (gameState.getGrid()[x][y] != 0) {
                     firstRow = ((firstRow == - 1) || (y < firstRow)) ? y : firstRow;
                     firstCol = ((firstCol == - 1) || (x < firstCol)) ? x : firstCol;
                     lastRow = (y > lastRow) ? y : lastRow;
@@ -311,7 +317,7 @@ public class GameOfLifeUi extends JFrame {
             int[][] cGrid = new int[lastRow + 1][lastCol + 1];
             for (int x = firstRow; x <= lastRow; x++)
                 for (int y = firstCol; y <= lastCol; y++)
-                    cGrid[x - firstRow][y - firstCol] = gameState.getGridPanel().getGrid()[y][x];
+                    cGrid[x - firstRow][y - firstCol] = gameState.getGrid()[y][x];
             // sends the file off for saving
             fileWriter.writeToFile(cGrid, lastRow - firstRow, lastCol - firstCol);
         }
@@ -330,8 +336,8 @@ public class GameOfLifeUi extends JFrame {
             // adds action listener to resize grid to the correct dimensions and
             // repaint
             addActionListener(e -> {
-                gameState.getGridPanel().setGrid(resizeGrid(x, y));
-                gameState.getGridPanel().repaint();
+                gameState.setGrid(resizeGrid(x, y));
+                gridPanel.repaint();
             });
         }
     }

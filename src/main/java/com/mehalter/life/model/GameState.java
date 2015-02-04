@@ -1,23 +1,31 @@
 package com.mehalter.life.model;
 
-import com.mehalter.life.ui.GridPanel;
-
 import javax.swing.*;
+import java.awt.*;
 
 public class GameState {
+
     private Timer gameTimer;
-    private GridPanel gridPanel;
     private boolean running, contiguous;
     private int currentX, currentY, currentUser;
+    private int xSize;
+    private int ySize;
+    private Color user1;
+    private Color user2;
+    private int[][] grid;
 
-    public GameState(Timer gameTimer, GridPanel gridPanel) {
+    public GameState(Timer gameTimer, int xSize, int ySize, Color user1, Color user2, int[][] grid) {
         this.gameTimer = gameTimer;
+        this.xSize = xSize;
+        this.ySize = ySize;
+        this.user1 = user1;
+        this.user2 = user2;
+        this.grid = grid;
         this.running = false;
         this.contiguous = true;
         this.currentX = 0;
         this.currentY = 0;
         this.currentUser = 1;
-        this.gridPanel = gridPanel;
     }
 
     public Timer getGameTimer() {
@@ -26,10 +34,6 @@ public class GameState {
 
     public void setGameTimer(Timer gameTimer) {
         this.gameTimer = gameTimer;
-    }
-
-    public GridPanel getGridPanel() {
-        return gridPanel;
     }
 
     public boolean isRunning() {
@@ -70,5 +74,45 @@ public class GameState {
 
     public void switchCurrentUser() {
         currentUser = getCurrentUser() == 1 ? 2 : 1;
+    }
+
+    public int getxSize() {
+        return xSize;
+    }
+
+    public void setxSize(int xSize) {
+        this.xSize = xSize;
+    }
+
+    public int getySize() {
+        return ySize;
+    }
+
+    public void setySize(int ySize) {
+        this.ySize = ySize;
+    }
+
+    public Color getUser1() {
+        return user1;
+    }
+
+    public void setUser1(Color user1) {
+        this.user1 = user1;
+    }
+
+    public Color getUser2() {
+        return user2;
+    }
+
+    public void setUser2(Color user2) {
+        this.user2 = user2;
+    }
+
+    public int[][] getGrid() {
+        return grid;
+    }
+
+    public void setGrid(int[][] grid) {
+        this.grid = grid;
     }
 }
