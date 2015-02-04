@@ -22,6 +22,10 @@ public class GameState {
         return gameTimer;
     }
 
+    public void setGameTimer(Timer gameTimer) {
+        this.gameTimer = gameTimer;
+    }
+
     public GridPanel getGridPanel() {
         return gridPanel;
     }
@@ -64,9 +68,5 @@ public class GameState {
 
     public void switchCurrentUser() {
         currentUser = getCurrentUser() == 1 ? 2 : 1;
-    }
-
-    public void setGameTimer(Timer gameTimer) {
-        this.gameTimer = gameTimer;
     }
 }

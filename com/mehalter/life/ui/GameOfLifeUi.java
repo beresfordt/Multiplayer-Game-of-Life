@@ -12,7 +12,7 @@ import java.util.Random;
 
 public class GameOfLifeUi extends JFrame {
 
-    private static final long serialVersionUID = -6912109370693886742L;
+    private static final long serialVersionUID = - 6912109370693886742L;
 
     private GameOfLife gameOfLife;
     private GameState gameState;
@@ -70,8 +70,7 @@ public class GameOfLifeUi extends JFrame {
             if (tempColor != null) {
                 if (gameState.getCurrentUser() == 1) {
                     gameState.getGridPanel().setUser1(tempColor);
-                }
-                else {
+                } else {
                     gameState.getGridPanel().setUser2(tempColor);
                 }
             }
@@ -86,22 +85,21 @@ public class GameOfLifeUi extends JFrame {
         // starts the game continuously
         startItem.addActionListener(e -> {
             // reverse the running boolean
-            gameState.setRunning(!gameState.isRunning());
+            gameState.setRunning(! gameState.isRunning());
             startItem.setText(gameState.isRunning() ? "Stop" : "Start");
 
             // while running, user cannot be able to click other buttons
-            stepItem.setEnabled(!gameState.isRunning());
-            clearItem.setEnabled(!gameState.isRunning());
-            userItem.setEnabled(!gameState.isRunning());
-            colorItem.setEnabled(!gameState.isRunning());
-            sizeMenu.setEnabled(!gameState.isRunning());
-            speedMenu.setEnabled(!gameState.isRunning());
+            stepItem.setEnabled(! gameState.isRunning());
+            clearItem.setEnabled(! gameState.isRunning());
+            userItem.setEnabled(! gameState.isRunning());
+            colorItem.setEnabled(! gameState.isRunning());
+            sizeMenu.setEnabled(! gameState.isRunning());
+            speedMenu.setEnabled(! gameState.isRunning());
 
             // start animation
             if (gameState.isRunning()) {
                 gameState.getGameTimer().start();
-            }
-            else {
+            } else {
                 gameState.getGameTimer().stop();
             }
         });
@@ -141,8 +139,7 @@ public class GameOfLifeUi extends JFrame {
                 // adds custom size to menu for selection
                 sizeMenu.add(new SizeMenuItem(w, h));
                 sizeMenu.add(customSize);
-            }
-            catch (java.lang.NumberFormatException n) {
+            } catch (java.lang.NumberFormatException n) {
                 JOptionPane
                         .showMessageDialog(this, "Invalid Number");
             }
@@ -171,8 +168,7 @@ public class GameOfLifeUi extends JFrame {
                 // adds custom speed to menu for selection
                 speedMenu.add(new SpeedMenuItem(h));
                 speedMenu.add(customSpeed);
-            }
-            catch (java.lang.NumberFormatException n) {
+            } catch (java.lang.NumberFormatException n) {
                 JOptionPane
                         .showMessageDialog(this, "Invalid Number");
             }
@@ -192,7 +188,7 @@ public class GameOfLifeUi extends JFrame {
         randomItem.setAccelerator(KeyStroke.getKeyStroke("control shift N"));
         // sets actions for item contiguous
         contiguousItem.addActionListener(e -> {
-            gameState.setContiguous(!gameState.isContiguous());
+            gameState.setContiguous(! gameState.isContiguous());
             contiguousItem.setText("Contiguous: " + (gameState.isContiguous() ? "On" : "Off"));
         });
         //Sets a random configuration on the board.
@@ -222,9 +218,9 @@ public class GameOfLifeUi extends JFrame {
                         //generates new random x and y and checks if it is used before
                         int tempX = rand.nextInt(gameState.getGridPanel().getxSize());
                         int tempY = rand.nextInt(gameState.getGridPanel().getySize());
-                        boolean newP = !newXs.contains(tempX);
-                        if (!newP) {
-                            newP = !(newYs.get(newXs.indexOf(tempX)) == tempY);
+                        boolean newP = ! newXs.contains(tempX);
+                        if (! newP) {
+                            newP = ! (newYs.get(newXs.indexOf(tempX)) == tempY);
                         }
                         if (newP) {
                             //if the point has not been used, then it is added to the list of random points
@@ -242,8 +238,7 @@ public class GameOfLifeUi extends JFrame {
                 else
                     JOptionPane
                             .showMessageDialog(this, "Invalid Density");
-            }
-            catch (java.lang.NumberFormatException n) {
+            } catch (java.lang.NumberFormatException n) {
                 JOptionPane
                         .showMessageDialog(this, "Invalid Density");
             }
@@ -293,23 +288,23 @@ public class GameOfLifeUi extends JFrame {
     // crops grid to boundaries of current live cells and saves to file
     private void cropGrid() {
         // initializes variables used
-        int firstRow = -1;
-        int lastRow = -1;
-        int firstCol = -1;
-        int lastCol = -1;
+        int firstRow = - 1;
+        int lastRow = - 1;
+        int firstCol = - 1;
+        int lastCol = - 1;
 
         // loops through and marks the x and y boundaries of the live cells
         for (int y = 0; y < gameState.getGridPanel().getxSize(); y++)
             for (int x = 0; x < gameState.getGridPanel().getxSize(); x++)
                 if (gameState.getGridPanel().getGrid()[x][y] != 0) {
-                    firstRow = ((firstRow == -1) || (y < firstRow)) ? y : firstRow;
-                    firstCol = ((firstCol == -1) || (x < firstCol)) ? x : firstCol;
+                    firstRow = ((firstRow == - 1) || (y < firstRow)) ? y : firstRow;
+                    firstCol = ((firstCol == - 1) || (x < firstCol)) ? x : firstCol;
                     lastRow = (y > lastRow) ? y : lastRow;
                     lastCol = (x > lastCol) ? x : lastCol;
                 }
 
         // checks to make sure the grid wasn't blank
-        if (firstRow != -1) {
+        if (firstRow != - 1) {
             // creates temporary grid of the specified boundary and fills with
             // the
             // cells
@@ -344,7 +339,7 @@ public class GameOfLifeUi extends JFrame {
     // speed menu item class for easy addition of new speed menu items
     class SpeedMenuItem extends JMenuItem {
 
-        private static final long serialVersionUID = -2630048822872351199L;
+        private static final long serialVersionUID = - 2630048822872351199L;
 
         public SpeedMenuItem(int _speed) {
             // initializes name

@@ -43,13 +43,11 @@ public class GameOfLife implements Runnable {
                     newGrid[x][y] = oneCount > twoCount ? 1 : 2;
                     // checks if a lives cell has too few or too many neighbors and
                     // sets it dead or alive accordingly
-                }
-                else if (gameState.getGridPanel().getGrid()[x][y] == 1 || gameState.getGridPanel().getGrid()[x][y] == 2) {
+                } else if (gameState.getGridPanel().getGrid()[x][y] == 1 || gameState.getGridPanel().getGrid()[x][y] == 2) {
                     newGrid[x][y] = (neighbors.size() < 2 || neighbors.size() > 3) ? 0
                             : gameState.getGridPanel().getGrid()[x][y];
                     // if none of previous rules, set cell to dead
-                }
-                else {
+                } else {
                     newGrid[x][y] = 0;
                 }
             }
@@ -150,7 +148,7 @@ public class GameOfLife implements Runnable {
                     gameOfLifeUi.getShapeMenu().show(e.getComponent(), e.getX(), e.getY());
                     // if it isn't a right click, and the grid is editable, toggle
                     // the cell state and repaint
-                else if (!gameState.isRunning()) {
+                else if (! gameState.isRunning()) {
                     gameState.getGridPanel().getGrid()[gameState.getCurrentY()][gameState.getCurrentX()] = (gameState.getGridPanel().getGrid()[gameState.getCurrentY()][gameState.getCurrentX()] == gameState.getCurrentUser() ? 0
                             : gameState.getCurrentUser());
                     gameState.getGridPanel().repaint();
@@ -184,7 +182,7 @@ public class GameOfLife implements Runnable {
 
                 // checks if the board is editable, and if the mouse is on the
                 // screen
-                if (!gameState.isRunning() && (gameState.getCurrentY() < gameState.getGridPanel().getxSize() && gameState.getCurrentY() >= 0)
+                if (! gameState.isRunning() && (gameState.getCurrentY() < gameState.getGridPanel().getxSize() && gameState.getCurrentY() >= 0)
                         && (gameState.getCurrentX() < gameState.getGridPanel().getxSize() && gameState.getCurrentX() >= 0)) {
                     // if the button used is the left click, then it turns cells
                     // on
