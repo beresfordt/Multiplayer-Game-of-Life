@@ -151,7 +151,11 @@ public class GameOfLifeFileWriter {
                             gameState.getGrid()[y + gameState.getCurrentY()][x + gameState.getCurrentX()] = sGrid[y][x] == 1 ? gameState.getCurrentUser()
                                     : sGrid[y][x] == 2 ? (gameState.getCurrentUser() == 1 ? gameState.getCurrentUser() + 1
                                     : gameState.getCurrentUser() - 1) : 0;
+<<<<<<< HEAD
                     gameState.repaint();
+=======
+                    gameOfLifeUi.getGridPanel().repaint();
+>>>>>>> 3751e392785e6f25f9070c09c3874360bc74713b
                     // catch array out of bounds error and prompt user that the
                     // shape is too big for the grid
                 } else
