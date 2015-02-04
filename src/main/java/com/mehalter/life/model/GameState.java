@@ -2,6 +2,7 @@ package com.mehalter.life.model;
 
 import javax.swing.*;
 import java.awt.*;
+<<<<<<< HEAD
 import java.awt.geom.Rectangle2D;
 
 //Holds attributes pertaining to the current state of the game
@@ -13,7 +14,27 @@ public class GameState extends JPanel {
     private int[][] grid;
 
     public GameState(Timer gameTimer, int xSize, int ySize, Color user1, Color user2) {
+=======
+
+public class GameState {
+
+    private Timer gameTimer;
+    private boolean running, contiguous;
+    private int currentX, currentY, currentUser;
+    private int xSize;
+    private int ySize;
+    private Color user1;
+    private Color user2;
+    private int[][] grid;
+
+    public GameState(Timer gameTimer, int xSize, int ySize, Color user1, Color user2, int[][] grid) {
+>>>>>>> 3751e392785e6f25f9070c09c3874360bc74713b
         this.gameTimer = gameTimer;
+        this.xSize = xSize;
+        this.ySize = ySize;
+        this.user1 = user1;
+        this.user2 = user2;
+        this.grid = grid;
         this.running = false;
         this.contiguous = true;
         this.currentX = 0;
@@ -21,6 +42,7 @@ public class GameState extends JPanel {
         this.xSize = xSize;
         this.ySize = ySize;
         this.currentUser = 1;
+<<<<<<< HEAD
         this.user1 = user1;
         this.user2 = user2;
         this.grid = new int[xSize][ySize];
@@ -47,6 +69,8 @@ public class GameState extends JPanel {
                 g2.draw(r2d);
             }
         }
+=======
+>>>>>>> 3751e392785e6f25f9070c09c3874360bc74713b
     }
 
     //Methods allow for retrieving of the current state, and changing the current state
@@ -130,6 +154,41 @@ public class GameState extends JPanel {
         currentUser = getCurrentUser() == 1 ? 2 : 1;
     }
 
+<<<<<<< HEAD
+=======
+    public int getxSize() {
+        return xSize;
+    }
+
+    public void setxSize(int xSize) {
+        this.xSize = xSize;
+    }
+
+    public int getySize() {
+        return ySize;
+    }
+
+    public void setySize(int ySize) {
+        this.ySize = ySize;
+    }
+
+    public Color getUser1() {
+        return user1;
+    }
+
+    public void setUser1(Color user1) {
+        this.user1 = user1;
+    }
+
+    public Color getUser2() {
+        return user2;
+    }
+
+    public void setUser2(Color user2) {
+        this.user2 = user2;
+    }
+
+>>>>>>> 3751e392785e6f25f9070c09c3874360bc74713b
     public int[][] getGrid() {
         return grid;
     }
