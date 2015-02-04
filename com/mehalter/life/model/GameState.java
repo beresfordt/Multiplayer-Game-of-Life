@@ -1,5 +1,7 @@
 package com.mehalter.life.model;
 
+import com.mehalter.life.ui.GridPanel;
+
 import javax.swing.*;
 
 public class GameState {

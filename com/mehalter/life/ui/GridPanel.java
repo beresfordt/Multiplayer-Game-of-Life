@@ -1,4 +1,4 @@
-package com.mehalter.life.model;
+package com.mehalter.life.ui;
 
 import javax.swing.*;
 import java.awt.*;
