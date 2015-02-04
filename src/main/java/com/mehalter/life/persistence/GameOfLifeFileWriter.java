@@ -9,6 +9,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+//Controls the file writing and reading module
 public class GameOfLifeFileWriter {
 
     private GameOfLifeUi gameOfLifeUi;
@@ -144,13 +145,13 @@ public class GameOfLifeFileWriter {
             // adds the action listener to put the file into the current grid
             // and repaint
             addActionListener(e -> {
-                if (cxSize + gameState.getCurrentX() < gameState.getGridPanel().getxSize() || cySize + gameState.getCurrentY() < gameState.getGridPanel().getxSize()) {
+                if (cxSize + gameState.getCurrentX() < gameState.getxSize() || cySize + gameState.getCurrentY() < gameState.getxSize()) {
                     for (int x = 0; x < cxSize; x++)
                         for (int y = 0; y < cySize; y++)
-                            gameState.getGridPanel().getGrid()[y + gameState.getCurrentY()][x + gameState.getCurrentX()] = sGrid[y][x] == 1 ? gameState.getCurrentUser()
+                            gameState.getGrid()[y + gameState.getCurrentY()][x + gameState.getCurrentX()] = sGrid[y][x] == 1 ? gameState.getCurrentUser()
                                     : sGrid[y][x] == 2 ? (gameState.getCurrentUser() == 1 ? gameState.getCurrentUser() + 1
                                     : gameState.getCurrentUser() - 1) : 0;
-                    gameState.getGridPanel().repaint();
+                    gameState.repaint();
                     // catch array out of bounds error and prompt user that the
                     // shape is too big for the grid
                 } else
