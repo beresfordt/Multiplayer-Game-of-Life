@@ -6,17 +6,19 @@ README
 
 Creator : Micah Halter
 
-Version 1.0  31 January 2015
+Contributors : Tom Beresfordt (beresfordt) and jaysoncopes
+
+Version 1.1  4 February 2015
 
 Requires: Java8
 
-![picture alt](https://lh3.googleusercontent.com/-2Yh8ItEcTQQ/VMxs3m3Na5I/AAAAAAAAeWk/R-cyDb0sitE/w720-h746-no/game%2Bof%2Blife.png "Image of the game running.")
+![picture alt](https://lh5.googleusercontent.com/-VJTV2sT3xPY/VNLNF1Fw7pI/AAAAAAAAeXc/Bd7HR1GaaGA/w720-h746-no/Screenshot-Multiplayer%2BGame%2Bof%2BLife-1.png "Image of the game running.")
 
 ======================================================================
 I. Description
 --------------
 
-Usage:
+Compiling and Running:
 
 1. **~$ javac com/mehalter/life/model/*.java**
 2. **~$ javac com/mehalter/life/ui/*.java**
@@ -29,7 +31,8 @@ Usage:
 The Game of Life, also known simply as Life, is a two-dimensional
 cellular automaton devised by the British mathematician John Horton
 Conway in 1970. The idea is that every cell in a square grid has one
-of two states, dead or alive. A cell can become alive if it has three neighbors, but dies if it has more than three or less than two. The
+of two states, dead or alive. A cell can become alive if it has three
+neighbors, but dies if it has more than three or less than two. The
 result is a pattern of cells which mimicks how simple life forms react
 to isolation and overpopulation.
 
@@ -100,7 +103,8 @@ III. Instructions
 - In the file menu, there are several options:
 
     - The open item allows you to open an existing .cells file that
-      you have either created or downloaded from [bitstorm](http://www.bitstorm.org/gameoflife/lexicon/).
+      you have either created or downloaded from
+      [bitstorm](http://www.bitstorm.org/gameoflife/lexicon/).
 
     - Once a file has been opened, you can right click on the board
       to open up a menu to select any of the shapes you have opened.

@@ -46,7 +46,7 @@ public class GameOfLife implements Runnable {
                     // sets it dead or alive accordingly
                 } else if (gameState.getGrid()[x][y] == 1 || gameState.getGrid()[x][y] == 2) {
                     newGrid[x][y] = (neighbors.size() < 2 || neighbors.size() > 3) ? 0
-                            : gameState.getGrid()[x][y];
+                        : gameState.getGrid()[x][y];
                     // if none of previous rules, set cell to dead
                 } else {
                     newGrid[x][y] = 0;
@@ -80,13 +80,13 @@ public class GameOfLife implements Runnable {
             down = gameState.getGrid()[x][ySmall ? gameState.getxSize() - 1 : y - 1];
 
             rightup = gameState.getGrid()[xBig ? 0 : x + 1][yBig ? 0
-                    : y + 1];
+                : y + 1];
             rightdown = gameState.getGrid()[xBig ? 0 : x + 1][ySmall ? gameState.getxSize() - 1
-                    : y - 1];
+                : y - 1];
             leftup = gameState.getGrid()[xSmall ? gameState.getxSize() - 1 : x - 1][yBig ? 0
-                    : y + 1];
+                : y + 1];
             leftdown = gameState.getGrid()[xSmall ? gameState.getxSize() - 1 : x - 1][ySmall ? gameState.getxSize() - 1
-                    : y - 1];
+                : y - 1];
 
         } else {
             // if contiguous option is false
@@ -152,7 +152,7 @@ public class GameOfLife implements Runnable {
                     // the cell state and repaint
                 else if (! gameState.isRunning()) {
                     gameState.getGrid()[gameState.getCurrentY()][gameState.getCurrentX()] = (gameState.getGrid()[gameState.getCurrentY()][gameState.getCurrentX()] == gameState.getCurrentUser() ? 0
-                            : gameState.getCurrentUser());
+                        : gameState.getCurrentUser());
                     gameOfLifeUi.getGridPanel().repaint();
                 }
             }
@@ -185,7 +185,7 @@ public class GameOfLife implements Runnable {
                 // checks if the board is editable, and if the mouse is on the
                 // screen
                 if (! gameState.isRunning() && (gameState.getCurrentY() < gameState.getxSize() && gameState.getCurrentY() >= 0)
-                        && (gameState.getCurrentX() < gameState.getxSize() && gameState.getCurrentX() >= 0)) {
+                    && (gameState.getCurrentX() < gameState.getxSize() && gameState.getCurrentX() >= 0)) {
                     // if the button used is the left click, then it turns cells
                     // on
                     // Checks to make sure that the cell it is changing is 0 so
@@ -193,12 +193,12 @@ public class GameOfLife implements Runnable {
                     // doesn't overwrite the other user's information
                     // accidentally
                     gameState.getGrid()[gameState.getCurrentY()][gameState.getCurrentX()] = SwingUtilities
-                            .isLeftMouseButton(e) ? gameState.getGrid()[gameState.getCurrentY()][gameState.getCurrentX()] == 0 ? gameState.getCurrentUser()
-                            : gameState.getGrid()[gameState.getCurrentY()][gameState.getCurrentX()]
-                            // if the button isn't the left click, then it
-                            // becomes an eraser
-                            // and deletes everything
-                            : 0;
+                        .isLeftMouseButton(e) ? gameState.getGrid()[gameState.getCurrentY()][gameState.getCurrentX()] == 0 ? gameState.getCurrentUser()
+                        : gameState.getGrid()[gameState.getCurrentY()][gameState.getCurrentX()]
+                        // if the button isn't the left click, then it
+                        // becomes an eraser
+                        // and deletes everything
+                        : 0;
                     gameOfLifeUi.getGridPanel().repaint();
                 }
             }

@@ -73,7 +73,7 @@ public class GameOfLifeUi extends JFrame {
         // asks user to pick a color to change the current user to
         colorItem.addActionListener(e -> {
             Color tempColor = JColorChooser.showDialog(gridPanel, "Choose a Color",
-                    gameState.getCurrentUser() == 1 ? gameState.getUser1() : gameState.getUser2());
+                gameState.getCurrentUser() == 1 ? gameState.getUser1() : gameState.getUser2());
             if (tempColor != null) {
                 if (gameState.getCurrentUser() == 1) {
                     gameState.setUser1(tempColor);
@@ -139,16 +139,16 @@ public class GameOfLifeUi extends JFrame {
         customSize.addActionListener(e -> {
             try {
                 int w = Integer.parseInt(JOptionPane.showInputDialog(this,
-                        "Enter the width:"));
+                    "Enter the width:"));
                 int h = Integer.parseInt(JOptionPane.showInputDialog(this,
-                        "Enter the height:"));
+                    "Enter the height:"));
                 sizeMenu.remove(customSize);
                 // adds custom size to menu for selection
                 sizeMenu.add(new SizeMenuItem(w, h));
                 sizeMenu.add(customSize);
             } catch (java.lang.NumberFormatException n) {
                 JOptionPane
-                        .showMessageDialog(this, "Invalid Number");
+                    .showMessageDialog(this, "Invalid Number");
             }
         });
         sizeMenu.add(customSize);
@@ -170,14 +170,14 @@ public class GameOfLifeUi extends JFrame {
         customSpeed.addActionListener(e -> {
             try {
                 int h = Integer.parseInt(JOptionPane.showInputDialog(this,
-                        "Enter the speed:"));
+                    "Enter the speed:"));
                 speedMenu.remove(customSpeed);
                 // adds custom speed to menu for selection
                 speedMenu.add(new SpeedMenuItem(h));
                 speedMenu.add(customSpeed);
             } catch (java.lang.NumberFormatException n) {
                 JOptionPane
-                        .showMessageDialog(this, "Invalid Number");
+                    .showMessageDialog(this, "Invalid Number");
             }
         });
         speedMenu.add(customSpeed);
@@ -203,14 +203,14 @@ public class GameOfLifeUi extends JFrame {
             try {
                 //Prompt the user for the desired population density
                 double r = Double.parseDouble(JOptionPane.showInputDialog(this,
-                        "Enter population density (under 1)"));
+                    "Enter population density (under 1)"));
                 //Ask the user if they want a single or double strain board
                 int a = JOptionPane.showOptionDialog(null,
-                        "One or two cell lines?", "Feedback",
-                        JOptionPane.OK_CANCEL_OPTION,
-                        JOptionPane.INFORMATION_MESSAGE,
-                        null, new String[]{"Single Strain", "Two Strain"},
-                        "default");
+                    "One or two cell lines?", "Feedback",
+                    JOptionPane.OK_CANCEL_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null, new String[]{"Single Strain", "Two Strain"},
+                    "default");
                 //checks if the number is valid
                 if (r < 1) {
                     //clear the current grid
@@ -244,10 +244,10 @@ public class GameOfLifeUi extends JFrame {
                 //then it prompts the user with an error message
                 else
                     JOptionPane
-                            .showMessageDialog(this, "Invalid Density");
+                        .showMessageDialog(this, "Invalid Density");
             } catch (java.lang.NumberFormatException n) {
                 JOptionPane
-                        .showMessageDialog(this, "Invalid Density");
+                    .showMessageDialog(this, "Invalid Density");
             }
         });
         // adds the items and returns menu
@@ -354,7 +354,7 @@ public class GameOfLifeUi extends JFrame {
             // adds action listener to change the timer speed to speed up
             // animation
             addActionListener(e -> gameState.setGameTimer(new Timer(_speed,
-                    (f) -> gameOfLife.nextStep())));
+                (f) -> gameOfLife.nextStep())));
         }
     }
 }

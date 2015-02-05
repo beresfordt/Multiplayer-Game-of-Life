@@ -27,10 +27,10 @@ public class GridPanel extends JPanel {
             for (int y = 0; y < gameState.getySize(); y++) {
                 // set the color of the cell
                 g2.setColor(gameState.getGrid()[x][y] == 1 ? gameState.getUser1()
-                        : gameState.getGrid()[x][y] == 2 ? gameState.getUser2() : Color.WHITE);
+                    : gameState.getGrid()[x][y] == 2 ? gameState.getUser2() : Color.WHITE);
                 // defines the rectangle painted
                 Rectangle2D r2d = new Rectangle2D.Float(x * width, y
-                        * height, width, height);
+                    * height, width, height);
                 // fills the rectangle, sets the color to black and then
                 // draws the grid
                 g2.fill(r2d);

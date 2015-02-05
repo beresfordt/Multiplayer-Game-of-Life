@@ -42,7 +42,7 @@ public class GameOfLifeFileWriter {
                 // saves first two lines with name and a new line, each preceded
                 // with a '!'
                 writer.write("!Name: "
-                        + currentFile.getName().replace(".cells", "") + "\n!\n");
+                    + currentFile.getName().replace(".cells", "") + "\n!\n");
                 // for each line in the grid, write the cell layout to the file
                 for (int x = 0; x <= xSize; x++) {
                     for (int y = 0; y <= ySize; y++) {
@@ -110,8 +110,8 @@ public class GameOfLifeFileWriter {
                 // characters on each line
                 cySize = reader.readLine().length();
                 cxSize = Files.readAllLines(
-                        Paths.get(shapeFile.getAbsolutePath()),
-                        Charset.defaultCharset()).size() - 2;
+                    Paths.get(shapeFile.getAbsolutePath()),
+                    Charset.defaultCharset()).size() - 2;
                 sGrid = new int[cySize][cxSize];
                 // resets back to the top of the shape
                 reader.reset();
@@ -121,7 +121,7 @@ public class GameOfLifeFileWriter {
                 for (int x = 0; x < cxSize; x++) {
                     for (int y = 0; y < cySize; y++)
                         sGrid[y][x] = line.charAt(y) == '.' ? 0 : line
-                                .charAt(y) == 'O' ? 1 : 2;
+                            .charAt(y) == 'O' ? 1 : 2;
                     // move to next line and repeat
                     line = reader.readLine();
                 }
@@ -130,7 +130,7 @@ public class GameOfLifeFileWriter {
             } catch (IOException e) {
                 sGrid = new int[0][0];
                 JOptionPane.showMessageDialog(this, shapeFile.getName()
-                        + ": File Error");
+                    + ": File Error");
             }
             // try closing file, and prompt user in case of error
             finally {
@@ -139,7 +139,7 @@ public class GameOfLifeFileWriter {
                         reader.close();
                 } catch (IOException e) {
                     JOptionPane.showMessageDialog(this, "Error closing file: "
-                            + shapeFile.getName());
+                        + shapeFile.getName());
                 }
             }
             // adds the action listener to put the file into the current grid
@@ -149,8 +149,8 @@ public class GameOfLifeFileWriter {
                     for (int x = 0; x < cxSize; x++)
                         for (int y = 0; y < cySize; y++)
                             gameState.getGrid()[y + gameState.getCurrentY()][x + gameState.getCurrentX()] = sGrid[y][x] == 1 ? gameState.getCurrentUser()
-                                    : sGrid[y][x] == 2 ? (gameState.getCurrentUser() == 1 ? gameState.getCurrentUser() + 1
-                                    : gameState.getCurrentUser() - 1) : 0;
+                                : sGrid[y][x] == 2 ? (gameState.getCurrentUser() == 1 ? gameState.getCurrentUser() + 1
+                                : gameState.getCurrentUser() - 1) : 0;
                     gameOfLifeUi.getGridPanel().repaint();
                     // catch array out of bounds error and prompt user that the
                     // shape is too big for the grid
