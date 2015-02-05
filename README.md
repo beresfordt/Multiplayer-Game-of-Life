@@ -6,7 +6,7 @@ README
 
 Creator : Micah Halter
 
-Contributors : Tom Beresfordt (beresfordt) and jaysoncopes
+Contributors : Tom Beresford (beresfordt) and jaysoncopes
 
 Version 1.1  4 February 2015
 
